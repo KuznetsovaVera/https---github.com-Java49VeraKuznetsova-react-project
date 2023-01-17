@@ -5,7 +5,12 @@ import timeZones from "../time-zones";
 export const cityOrCountryMain: string = 'Israel';
 
 export const cityOrCountryAll: Array<string> =
-  ['London','NaN', 'Toronto', 'Oslo'];
+  ['London','Vasya', 'Toronto', 'Oslo'];
+
+const timeZonesStr: Array<string> = 
+  timeZones.map (el => JSON.stringify(el));
+const indexMain: number =  timeZonesStr.findIndex (el=> el.includes(cityOrCountryMain))
+
 /*
 type TimerProps = {
     timeZoneIndex: number;
@@ -30,12 +35,10 @@ export const Timer: React.FC<TimerProps> = (props) => {
     }, [])
     
     function getIndexByName (cityOrCountry: string): number {
-        const timeZonesStr: Array<string> = 
-            timeZones.map (el => JSON.stringify(el));
+       
         let index: number = timeZonesStr.findIndex (el => 
             el.includes(cityOrCountry) );
-           // console.log (index);
-            if (index === -1) index = timeZonesStr.findIndex (el=> el.includes(cityOrCountryMain));
+           if (index === -1) index = indexMain;
         return index;    
     }
     return <div>
@@ -44,3 +47,4 @@ export const Timer: React.FC<TimerProps> = (props) => {
          textAlign: "center", fontSize: "2em"}}>Time {time.toLocaleTimeString(undefined,{timeZone})}</label>
     </div>
 }
+
