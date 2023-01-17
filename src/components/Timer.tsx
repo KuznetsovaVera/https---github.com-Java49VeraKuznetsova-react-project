@@ -1,4 +1,4 @@
-import { BlockList } from "net";
+//import { BlockList } from "net";
 import React from "react";
 import timeZones from "../time-zones";
 
@@ -21,13 +21,11 @@ type TimerProps = {
     
 }
 export const Timer: React.FC<TimerProps> = (props) => {
-    let index: number = getIndexByName(props.timeZoneCityOrCountry);
-  // const timeZone = timeZones[props.timeZoneCityOrCountry[getIndexByName(city)]].name;
-  const timeZone = timeZones[index].name;
+    let timeZoneIndex: number = getIndexByName(props.timeZoneCityOrCountry);
+    const timeZone: string = timeZones[timeZoneIndex].name;
     const [time, setTime] = React.useState(new Date());
     function tick() {
-      //  console.log("tick");
-        setTime(new Date());
+         setTime(new Date());
     }
     React.useEffect(()=>{
         const interval = setInterval(tick, 1000);
@@ -35,11 +33,9 @@ export const Timer: React.FC<TimerProps> = (props) => {
     }, [])
     
     function getIndexByName (cityOrCountry: string): number {
-       
-        let index: number = timeZonesStr.findIndex (el => 
+       let index: number = timeZonesStr.findIndex (el => 
             el.includes(cityOrCountry) );
-           if (index === -1) index = indexMain;
-        return index;    
+        return index === -1 ? indexMain : index;    
     }
     return <div>
         <h3>Time in time zone {timeZone}</h3>
