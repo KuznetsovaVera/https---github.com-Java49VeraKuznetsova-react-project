@@ -6,7 +6,9 @@ export const cityOrCountryMain: string = 'Israel';
 
 export const cityOrCountryAll: Array<string> =
   ['London','Vasya', 'Toronto', 'Oslo'];
-
+/* V.R. It isn't good idea to join tester's tools 
+to tested code.
+*/
 const timeZonesStr: Array<string> = 
   timeZones.map (el => JSON.stringify(el));
 const indexMain: number =  timeZonesStr.findIndex (el=> el.includes(cityOrCountryMain))
@@ -32,6 +34,9 @@ export const Timer: React.FC<TimerProps> = (props) => {
         return ()=>clearInterval(interval);
     }, [])
     
+    /* V.R. This method doesn't see difference between 'Oslo' and 'Osl',
+     between 'Toronto' and 'ronto'. It looks like bug
+    */
     function getIndexByName (cityOrCountry: string): number {
        let index: number = timeZonesStr.findIndex (el => 
             el.includes(cityOrCountry) );
