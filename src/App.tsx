@@ -1,22 +1,22 @@
 import React from 'react';
-import { cityOrCountryAll, Timer } from './components/Timer';
+import { Timer } from './components/Timer';
 
-
+const divStyleRow: React.CSSProperties = {display:"flex", flexDirection: 'row', 
+alignItems:"center"}
+const divStyleOne: React.CSSProperties = {justifyContent:"center",display:"flex", margin:"5vw"}
 function App() {
   return   <div>   
-    <div style={{display:"flex", flexDirection: 'row', 
-     alignItems:"center"}}> 
-     <div style={{justifyContent:"center",display:"flex", margin:"5vw"}}>
-    <Timer timeZoneCityOrCountry= {cityOrCountryAll[0]}></Timer>
+    <div style={divStyleRow}> 
+     <div style={divStyleOne}>
+    <Timer CityOrCountry= {'Israel'} inputID={'input1'}></Timer>
     </div>
-    <Timer timeZoneCityOrCountry= {cityOrCountryAll[1]}></Timer>
+    <Timer CityOrCountry= {'Israel'} inputID={'input2'}></Timer>
     </div>
-    <div style={{display:"flex", flexDirection: 'row', 
-    alignItems:"center"}}>
-       <div style={{justifyContent:"center",display:"flex", margin:"5vw"}}>
-    <Timer timeZoneCityOrCountry={cityOrCountryAll[2]}></Timer> 
+    <div style={divStyleRow}>
+       <div style={divStyleOne}>
+    <Timer CityOrCountry={'Israel'} inputID={'input3'}></Timer> 
     </div>
-    <Timer timeZoneCityOrCountry={cityOrCountryAll[3]}></Timer>
+    <Timer CityOrCountry={'Israel'} inputID={'input4'}></Timer>
     </div>
    </div>
 }
