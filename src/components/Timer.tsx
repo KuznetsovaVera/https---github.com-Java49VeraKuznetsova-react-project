@@ -11,9 +11,13 @@ type TimerProps = {
     
 }
 export const Timer: React.FC<TimerProps> = (props) => {
-
-    const timeZoneName = React.useRef (props.CityOrCountry);   
-    const [timeZone, setTimeZone] = React.useState(timeZones[getIndexByName(props.CityOrCountry)].name);
+    const timeZoneIndex: number = getIndexByName(props.CityOrCountry);
+    const timeZoneIndexIsrael: number = getIndexByName("Israel")
+    const timeZoneName = React.useRef (timeZoneIndex === -1 ? "Israel" :
+                                        props.CityOrCountry); 
+    //const [timeZone, setTimeZone] = React.useState(timeZones[timeZoneIndex].name);
+    const [timeZone, setTimeZone] = React.useState(timeZoneIndex === -1 ?
+             timeZones[timeZoneIndexIsrael].name : timeZones[timeZoneIndex].name);  
     const [time, setTime] = React.useState(new Date());
     
 
@@ -51,7 +55,7 @@ export const Timer: React.FC<TimerProps> = (props) => {
         <label style={{display: "flex", 
          textAlign: "center", fontSize: "2em"}}>Time {time.toLocaleTimeString(undefined,{timeZone})}</label>
         <Input placeHolderPrint = {"Enter name, press GO"}
-        inputProcess={timeZoneInput} ></Input>
+        inputProcess={timeZoneInput}></Input>
     </div>
 }
 
