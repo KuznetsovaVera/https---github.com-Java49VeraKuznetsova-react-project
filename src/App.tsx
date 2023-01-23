@@ -8,15 +8,15 @@ function App() {
   return   <div>   
     <div style={divStyleRow}> 
      <div style={divStyleOne}>
-    <Timer CityOrCountry= {'Israel'} inputID={'input1'}></Timer>
+    <Timer CityOrCountry= {'Israel'}></Timer>
     </div>
-    <Timer CityOrCountry= {'Israel'} inputID={'input2'}></Timer>
+    <Timer CityOrCountry= {'Oslo'} ></Timer>
     </div>
     <div style={divStyleRow}>
        <div style={divStyleOne}>
-    <Timer CityOrCountry={'Israel'} inputID={'input3'}></Timer> 
+    <Timer CityOrCountry={'Toronto'} ></Timer> 
     </div>
-    <Timer CityOrCountry={'Israel'} inputID={'input4'}></Timer>
+    <Timer CityOrCountry={'China'} ></Timer>
     </div>
    </div>
 }
