@@ -2,6 +2,7 @@ import React from "react";
 type AlertProps = {
     type: "warn"|"info"|"error";
     message: string;
+   // widthInput?: string;
 }
 export const Alert: React.FC<AlertProps> = ({type, message}) => {
     let  backGround: "red" | "green" | "yellow";

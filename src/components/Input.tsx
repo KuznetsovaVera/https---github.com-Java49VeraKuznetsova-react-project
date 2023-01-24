@@ -3,8 +3,9 @@ import { Alert } from "./Alert";
 type InputProps = {
     inputProcess: (value: string)=>string;
     placeHolderPrint: string;
+    widthInput?: string;
 }
-export const Input: React.FC<InputProps> = ({inputProcess, placeHolderPrint}) => {
+export const Input: React.FC<InputProps> = ({inputProcess, placeHolderPrint, widthInput}) => {
     let inputElement: HTMLInputElement | null
    
     const [message, setMessage] = React.useState('')
@@ -19,7 +20,6 @@ export const Input: React.FC<InputProps> = ({inputProcess, placeHolderPrint}) =>
         } else {
             
             setMessage(messageRet);
-
         }
         
     }
@@ -27,7 +27,7 @@ export const Input: React.FC<InputProps> = ({inputProcess, placeHolderPrint}) =>
        inputElement = document.getElementById(inputId.current) as HTMLInputElement;
     })
     return <div>
-        <input id={inputId.current} placeholder={placeHolderPrint}/>
+        <input id={inputId.current} placeholder={placeHolderPrint} style={{width: widthInput}}/>
         <button onClick={processGo}>GO</button>
         {message && <Alert type={"error"} message={message}/>}
     </div>
