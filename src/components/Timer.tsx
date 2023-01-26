@@ -7,7 +7,7 @@ const timeZonesStr: Array<string> =
 
 type TimerProps = {
     CityOrCountry: string; 
-    time: Date;   
+   // time: Date;   
 }
 export const Timer: React.FC<TimerProps> = (props) => {
     const timeZoneIndex: number = getIndexByName(props.CityOrCountry);
@@ -17,7 +17,20 @@ export const Timer: React.FC<TimerProps> = (props) => {
  
     const [timeZone, setTimeZone] = React.useState(timeZoneIndex === -1 ?
              timeZones[timeZoneIndexIsrael].name : timeZones[timeZoneIndex].name);  
-  
+             const [time, setTime] = React.useState(new Date());
+
+    React.useEffect(() => {
+        const timeZoneIndex: number = getIndexByName(props.CityOrCountry);
+        timeZoneName.current = timeZoneIndex === -1 ? "Israel" :
+        props.CityOrCountry; 
+        const interval = setInterval(tick, 1000);
+           return ()=>clearInterval(interval);
+        setTimeZone(timeZones[timeZoneIndex].name); 
+    }, [props]);
+
+    function tick() {
+        setTime(new Date());
+   }
     function timeZoneInput (cityOrCountry: string): string {
      let res: string ='';
      let index: number = getIndexByName (cityOrCountry);
@@ -43,7 +56,8 @@ export const Timer: React.FC<TimerProps> = (props) => {
        
         <h3 className="logo">Time in time zone {timeZoneName.current}</h3>
         <label style={{display: "flex", 
-         textAlign: "center", fontSize: "2em"}}>Time {props.time.toLocaleTimeString(undefined,{timeZone})}</label>
+        textAlign: "center", fontSize: "2em"}}>
+            Time {time.toLocaleTimeString(undefined,{timeZone})}</label>
         <Input placeHolderPrint = {"Enter name, press GO"}
         inputProcess={timeZoneInput}></Input>
     </div>

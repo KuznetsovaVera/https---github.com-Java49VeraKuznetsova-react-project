@@ -26,8 +26,10 @@ export const Input: React.FC<InputProps> = ({inputProcess, placeHolderPrint, wid
     useEffect(() => {
        inputElement = document.getElementById(inputId.current) as HTMLInputElement;
     })
+   
+  //  style={{width: widthInput}}
     return <div>
-        <input id={inputId.current} placeholder={placeHolderPrint} style={{width: widthInput}}/>
+        <input id={inputId.current} placeholder={placeHolderPrint} />
         <button onClick={processGo}>GO</button>
         {message && <Alert type={"error"} message={message}/>}
     </div>
