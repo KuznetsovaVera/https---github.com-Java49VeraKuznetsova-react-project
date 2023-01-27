@@ -21,40 +21,12 @@ export function getRandomNumber(min: number, max: number,
 
 export function getRandomMatrix(rows: number, columns: number, min: number, max: number): number[][] {
 
-
-//randMatrix.forEach (el => {
-
-//})
-/*
-randMatrix.forEach (elRows => {
-    elRows.forEach (elCol => {
-        randMatrix[elRows][elCol] = getRandomNumber(min, max)
-    }) 
-
-}) */
-
-const randMatrix: number[][] = Array(rows).fill(getRandomNumber(min, max)).map(() => 
-     Array(columns).fill(getRandomNumber(min, max)))
-
-//var arr = Array(row).fill().map(() => Array(column).fill(0));
-let randMatrix1: number[][] = new Array(rows);
-
-//console.log (randMatrix1);
-//randMatrix1 = randMatrix1.map (el => new Array(columns));
-//console.log (randMatrix1);
-let randMatrix2: number[][] = Array.from(Array(rows), () => new Array(columns));
-console.log (randMatrix2)
-//randMatrix2.map (el => getRandomNumber(min,max))
-//console.log ("2", randMatrix2)
-//randMatrix = Array.from({length: rows}, el => {}).map(Array.from({length: columns}, el => {})
-
+let randMatrix: number[][] = Array.from(Array(rows), () => new Array(columns));
 for (let i: number = 0; i<rows; i++) { 
     for (let  j: number =0; j < columns; j++) {
-        randMatrix2[i][j] = getRandomNumber(min, max)
+        randMatrix[i][j] = getRandomNumber(min, max)
        
     }
-    console.log ("2", randMatrix2)
-    //randMatrix[i][j]
 } 
 return randMatrix;
     }   
