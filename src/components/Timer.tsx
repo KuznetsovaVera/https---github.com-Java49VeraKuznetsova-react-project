@@ -7,7 +7,7 @@ const timeZonesStr: Array<string> =
 
 type TimerProps = {
     CityOrCountry: string; 
-   // time: Date;   
+    time: Date;   
 }
 export const Timer: React.FC<TimerProps> = (props) => {
     const timeZoneIndex: number = getIndexByName(props.CityOrCountry);
@@ -18,19 +18,35 @@ export const Timer: React.FC<TimerProps> = (props) => {
     const [timeZone, setTimeZone] = React.useState(timeZoneIndex === -1 ?
              timeZones[timeZoneIndexIsrael].name : timeZones[timeZoneIndex].name);  
              const [time, setTime] = React.useState(new Date());
-
+/*
     React.useEffect(() => {
         const timeZoneIndex: number = getIndexByName(props.CityOrCountry);
         timeZoneName.current = timeZoneIndex === -1 ? "Israel" :
         props.CityOrCountry; 
+        timeZoneIndex === -1 ?
+            setTimeZone(timeZones[timeZoneIndexIsrael].name) : 
+            setTimeZone(timeZones[timeZoneIndex].name);
         const interval = setInterval(tick, 1000);
+       // setTimeZone(timeZones[timeZoneIndex].name); 
            return ()=>clearInterval(interval);
-        setTimeZone(timeZones[timeZoneIndex].name); 
     }, [props]);
 
     function tick() {
         setTime(new Date());
    }
+   */
+   React.useEffect(() => {
+    const timeZoneIndex: number = getIndexByName(props.CityOrCountry);
+    timeZoneName.current = timeZoneIndex === -1 ? "Israel" :
+    props.CityOrCountry; 
+    timeZoneIndex === -1 ?
+        setTimeZone(timeZones[timeZoneIndexIsrael].name) : 
+        setTimeZone(timeZones[timeZoneIndex].name);
+  //  const interval = setInterval(tick, 1000);
+   // setTimeZone(timeZones[timeZoneIndex].name); 
+     //  return ()=>clearInterval(interval);
+}, [props]);
+
     function timeZoneInput (cityOrCountry: string): string {
      let res: string ='';
      let index: number = getIndexByName (cityOrCountry);

@@ -12,9 +12,9 @@ function App() {
 
    const [cityOrCountries, setCityOrCountry] =
          React.useState<string[] > ([]);
-  //const [time, setTime] = React.useState(new Date());
+    const [time, setTime] = React.useState(new Date());
    
-   /*
+   
    function tick() {
             setTime(new Date());
        }
@@ -22,8 +22,8 @@ function App() {
    React.useEffect(()=>{
            const interval = setInterval(tick, 1000);
            return ()=>clearInterval(interval);
-       }, [])
-*/
+       }, [cityOrCountries])
+
    function creatingDivs (value: string): string {
     const cityOrCountries:  string[] = value.split('#');
    
@@ -46,7 +46,7 @@ function App() {
       console.log("3",cityOrCountries);
       return cityOrCountries.map (curName => <div style={{width: "45%", height: "40vh",
      //  }}><Timer CityOrCountry={curName} time={time} ></Timer> </div>)
-   }}><Timer CityOrCountry={curName} ></Timer> </div>)
+   }}><Timer CityOrCountry={curName} time={time} ></Timer> </div>)
    } 
    //widthInput="50vw"
    return <section style = {{display: "flex", flexDirection:"column", alignItems: 'center', marginTop:'5vh'}}>
