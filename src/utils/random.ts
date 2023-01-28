@@ -6,7 +6,10 @@ export function getRandomNumber(min: number, max: number,
    if (isMinInclusive === false) {
                 min++;  }
    if (isMaxInclusive === true)   {
-                max++; }                   
+                max++; }   
+                 /* V.R.  !!!
+    max = isMaxInclusive ? max : max-1;
+    */                
    if (max < min) { 
      [min, max] = [max, min]
         }
@@ -24,7 +27,7 @@ export function getRandomMatrix(rows: number, columns: number, min: number, max:
 let randMatrix: number[][] = Array.from(Array(rows), () => new Array(columns));
 for (let i: number = 0; i<rows; i++) { 
     for (let  j: number =0; j < columns; j++) {
-        randMatrix[i][j] = getRandomNumber(min, max)
+        randMatrix[i][j] = getRandomNumber(min, max, true, true)
        
     }
 } 
