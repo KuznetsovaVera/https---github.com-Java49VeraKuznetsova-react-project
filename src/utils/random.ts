@@ -3,13 +3,11 @@ export {}
 
 export function getRandomNumber(min: number, max: number,
     isMinInclusive: boolean=true, isMaxInclusive: boolean=false): number {
-   if (isMinInclusive === false) {
+   if (!isMinInclusive) {
                 min++;  }
-   if (isMaxInclusive === true)   {
+   if (isMaxInclusive)   {
                 max++; }   
-                 /* V.R.  !!!
-    max = isMaxInclusive ? max : max-1;
-    */                
+               
    if (max < min) { 
      [min, max] = [max, min]
         }
@@ -17,7 +15,7 @@ export function getRandomNumber(min: number, max: number,
         throw "min may not be equaled to max";
     }
     
-    const randNumder: number = Math.floor(Math.random()*(max-min)) + min;
+    const randNumder: number = Math.trunc(Math.random()*(max-min)) + min;
     return randNumder;
     }  
 
@@ -35,46 +33,15 @@ return randMatrix;
     }   
 
 
-export function getRandomArrayElement(array: any[]): any {
+export function getRandomArrayElement<T>(array: T[]): T {
 return array [getRandomNumber(0, array.length)]
 }    
 
 
-// from Juri:  but getRandomDate is too much complicated. The constructor of the class Date treats date 31 February by right way
-/*
-export function getRandomDate(minYear: number, maxYear: number): Date {
-    const numberMonth = 12;
-    const numberDate30 = 30;
-    const numberDate31 = 31;
-    const numberFebr = 28;
-    const randYear: number =
-      getRandomNumber (minYear, maxYear);
-   
-   const randMonth: number =
-             getRandomNumber(0, numberMonth);
 
-   let randDate: number 
-    if (randMonth === 3 || randMonth === 5 || randMonth === 8 || randMonth === 10) {
-       randDate = getRandomNumber(1, numberDate30, true, true);
-    }
-    else if (randMonth === 1) {
-        randYear%4 ===0 ? randDate =getRandomNumber(1, numberFebr+1, true, true) :
-                          randDate = getRandomNumber(1, numberFebr, true, true)
-  
-    }
-    else 
-    {
-        randDate = getRandomNumber(1, numberDate31, true, true)
-    }
-    
-    return  new Date (randYear, randMonth, randDate);
-}
-*/
 export function getRandomDate(minYear: number, maxYear: number): Date {
     const numberMonth = 12;
-    //const numberDate30 = 30;
-    const numberDate31 = 31;
-   // const numberFebr = 28;
+    const numberDateMax = 31;
     const randYear: number =
       getRandomNumber (minYear, maxYear);
    
@@ -82,7 +49,7 @@ export function getRandomDate(minYear: number, maxYear: number): Date {
              getRandomNumber(0, numberMonth);
     
    let randDate: number = 
-      getRandomNumber(1, numberDate31, true, true);
+      getRandomNumber(1, numberDateMax, true, true);
    
     return  new Date (randYear, randMonth, randDate);
 }
