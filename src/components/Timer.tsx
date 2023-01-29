@@ -11,7 +11,7 @@ type TimerProps = {
     time: Date;   
 }
 export const Timer: React.FC<TimerProps> = (props) => {
-    const timeZoneIndex: number = getIndexByName(props.CityOrCountry);
+   let timeZoneIndex: number = getIndexByName(props.CityOrCountry);
     const timeZoneIndexIsrael: number = getIndexByName("Israel")
     const timeZoneName = React.useRef (timeZoneIndex === -1 ? "Israel" :
                                         props.CityOrCountry); 
@@ -37,14 +37,17 @@ export const Timer: React.FC<TimerProps> = (props) => {
    }
    */
    React.useEffect(() => {
-    const timeZoneIndex: number = getIndexByName(props.CityOrCountry);
-    timeZoneName.current = timeZoneIndex === -1 ? "Israel" :
+ timeZoneIndex = getIndexByName(props.CityOrCountry);
+   
+  timeZoneName.current = timeZoneIndex === -1 ? "Israel" :
     props.CityOrCountry; 
-    timeZoneIndex === -1 ?
-        setTimeZone(timeZones[timeZoneIndexIsrael].name) : 
-                    setTimeZone(timeZones[timeZoneIndex].name);
-      
-}, [props]);
+   if(timeZoneIndex === -1) {
+        timeZoneIndex = timeZoneIndexIsrael} 
+                          
+        setTimeZone(timeZones[timeZoneIndex].name);
+       // V.R. The bug was here
+       // was: [props]
+}, [props.CityOrCountry]);
 
     function timeZoneInput (cityOrCountry: string): string {
      let res: string ='';
