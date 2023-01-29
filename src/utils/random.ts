@@ -40,7 +40,8 @@ return array [getRandomNumber(0, array.length)]
 }    
 
 
-
+// from Juri:  but getRandomDate is too much complicated. The constructor of the class Date treats date 31 February by right way
+/*
 export function getRandomDate(minYear: number, maxYear: number): Date {
     const numberMonth = 12;
     const numberDate30 = 30;
@@ -66,5 +67,22 @@ export function getRandomDate(minYear: number, maxYear: number): Date {
         randDate = getRandomNumber(1, numberDate31, true, true)
     }
     
-    return  new Date (randYear, randMonth, randDate);;
+    return  new Date (randYear, randMonth, randDate);
+}
+*/
+export function getRandomDate(minYear: number, maxYear: number): Date {
+    const numberMonth = 12;
+    //const numberDate30 = 30;
+    const numberDate31 = 31;
+   // const numberFebr = 28;
+    const randYear: number =
+      getRandomNumber (minYear, maxYear);
+   
+   const randMonth: number =
+             getRandomNumber(0, numberMonth);
+    
+   let randDate: number = 
+      getRandomNumber(1, numberDate31, true, true);
+   
+    return  new Date (randYear, randMonth, randDate);
 }
