@@ -11,8 +11,13 @@ const dispatch = useDispatch();
    
    function getUserName (userName: string) : string {
     let res: string = '';
-    res = userName.includes(ADMIN) ? '' : 'No Admin';
-    setUser(userName);
+    if (userName.includes(ADMIN)) {
+        setUser(userName);
+    } else {
+        res = 'No Admin';
+    }
+    
+   ;
     return res;
    }
 
