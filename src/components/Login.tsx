@@ -10,6 +10,7 @@ export const Login: React.FC<Props> = ({userName}) => {
    const dispatch = useDispatch();
     return <div>
    <p> Please, put login, then press GO, if correct press Login</p>
+  
     <button onClick={() => dispatch(authActions.login(userName))}>Login</button>
     </div>
 }

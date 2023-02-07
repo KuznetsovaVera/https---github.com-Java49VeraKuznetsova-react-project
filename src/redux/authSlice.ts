@@ -10,13 +10,7 @@ const authSlice = createSlice ({
            
             state.authenticated = data.payload.indexOf('admin')!== -1 ?
             data.payload : 'noAdmin';
-            /*
-            if(data.payload.indexOf('admin')) {
-                state.authenticated = data.payload;
-            }
-            else {
-                state.authenticated = '';
-            } */
+         
         },
         logout: (state) => {
             if(state.authenticated.length > 0) {
