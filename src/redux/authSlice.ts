@@ -7,10 +7,9 @@ const authSlice = createSlice ({
     name: "auth",
     reducers: {
         login: (state, data) => {
-           
-            state.authenticated = data.payload.indexOf('admin')!== -1 ?
-            data.payload : 'noAdmin';
-         
+                        if(!state.authenticated) {
+                state.authenticated = data.payload;
+            }
         },
         logout: (state) => {
             if(state.authenticated.length > 0) {

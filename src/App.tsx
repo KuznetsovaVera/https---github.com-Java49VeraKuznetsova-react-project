@@ -12,44 +12,33 @@ function App() {
  const auth: string = useSelector<any, string>(state => state.auth.authenticated);
  const [operand, setOperand] = React.useState(1);  
  const [factor, setFactor] = React.useState(10);
- const [userName, setUser] = React.useState('');
-
+ 
    return <div> 
-   <p> current user name: {userName}</p>
-   {auth === '' &&
+   {!auth &&
    <div>
-      <Input placeHolder={'Enter userName'} inputProcess={function (value: string): string {
-               setUser(value);
-               return '';
-            } }></Input>
-      <Login userName={userName}></Login>
+          <Login></Login>
       </div>
    }   
- 
-   { auth !== '' &&
-         <div> 
-         <Input placeHolder={'Enter factor'} inputProcess={function (value: string): string {
-           setFactor(+value);
-           return '';
-              } }></Input>
-           </div> 
-             
-}     
-         {auth !== 'noAdmin' && auth !== '' &&
-       <div> 
-        <Input placeHolder={'Enter operand'} inputProcess={function (value: string): 
-        string {
-                setOperand(+value);
-                return '';
-             } } ></Input> 
-             </div>}  
-     
-   { auth!=='' && 
+   {    auth && <div>
+      <p> current user name: {auth}</p>
+        <Input placeHolder={'Enter operand'} inputProcess={function (value: string):
+         string {
+        setOperand(+value);
+        return '';
+      } }></Input>
+        <Input placeHolder={'Enter factor'} inputProcess={function (value: string):
+         string {
+        setFactor(+value);
+        return '';
+      } }></Input>
+      </div>}
+        
+   { auth && 
    <div><CounterUpdater operand = {operand}></CounterUpdater>
    <CounterSquare></CounterSquare>
    <CounterMultiply factor = {factor}></CounterMultiply>
    </div>}
-    {(auth!=='') && <Logout></Logout>
+    {auth && <Logout></Logout>
     }  
    
    </div>  
@@ -57,4 +46,3 @@ function App() {
 }
 
 export default App;
-

@@ -3,5 +3,5 @@ import { useDispatch } from "react-redux";
 
 export const Logout: React.FC = () => {
    const dispatch = useDispatch();
-    return <button onClick={() => dispatch(authActions.logout())}>logout</button>
+    return <button onClick={() => dispatch(authActions.logout())}>Logout</button>
 }
