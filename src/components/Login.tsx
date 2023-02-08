@@ -11,7 +11,7 @@ const dispatch = useDispatch();
    
    function getUserName (userName: string) : string {
     let res: string = '';
-    if (userName.includes(ADMIN)) {
+    if (userName.toLowerCase().includes(ADMIN)) {
         setUser(userName);
     } else {
         res = 'No Admin';
