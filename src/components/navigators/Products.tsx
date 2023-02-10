@@ -1,16 +1,29 @@
 import { NavLink, Outlet } from "react-router-dom";
+import { NavigatorProps } from "../../models/navigatorProps";
 
-export const Products: React.FC = () => {
+type Props = {
+    navConfProd: NavigatorProps;
+}
+export const Products: React.FC<Props> = (props) => {
+    function activeLink(isActive: boolean): React.CSSProperties|undefined {
+        let res: React.CSSProperties = {};
+        if (isActive) {
+            res = {backgroundColor: "blue", color: "white"}
+        }
+        return res;
+    }
+   function getItems (): JSX.Element[] {
+        return props.navConfProd.navigatorConfig.map(el =>
+            <li className="navigator-item">
+            <NavLink style={({isActive}) => activeLink(isActive)} 
+            to={el.navigatorTo}>{el.navigatorName}</NavLink>
+        </li>)
+    }
 return <div>
     <nav>
-    <ul className="navigator-list">
-                <li className="navigator-item">
-                    <NavLink to="/products/dairy">Dairy</NavLink>
-                </li>
-                <li className="navigator-item">
-                <NavLink to="/products/bread">Bread</NavLink>
-                </li>
-            </ul> 
+    <ul className={props.navConfProd.classNameList}>
+    {getItems()} 
+                </ul> 
     </nav>
     <Outlet></Outlet>
 </div>

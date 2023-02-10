@@ -1,10 +1,34 @@
-.navigator-list {
+.navigator-list-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 80vw;
+    list-style: none;
+}
+.navigator-list-products {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 80vw;
     list-style: none;
+       
 }
+.navigator-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 80vw;
+    list-style: none;
+}
+.navigator-item-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 80vw;
+    list-style: none;
+}
+
+
 @media(min-width: 560px) {
     .navigator-list {
         flex-direction: row;
