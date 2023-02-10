@@ -4,7 +4,7 @@ import { NavigatorProps } from "../../models/navigatorProps";
 type Props = {
     navConfProd: NavigatorProps;
 }
-export const Products: React.FC<Props> = (props) => {
+export const Products: React.FC<Props> = ({navConfProd }) => {
     function activeLink(isActive: boolean): React.CSSProperties|undefined {
         let res: React.CSSProperties = {};
         if (isActive) {
@@ -13,7 +13,7 @@ export const Products: React.FC<Props> = (props) => {
         return res;
     }
    function getItems (): JSX.Element[] {
-        return props.navConfProd.navigatorConfig.map(el =>
+        return navConfProd.navigatorConfig.map(el =>
             <li className="navigator-item">
             <NavLink style={({isActive}) => activeLink(isActive)} 
             to={el.navigatorTo}>{el.navigatorName}</NavLink>
@@ -21,7 +21,7 @@ export const Products: React.FC<Props> = (props) => {
     }
 return <div>
     <nav>
-    <ul className={props.navConfProd.classNameList}>
+    <ul className={navConfProd.classNameList}>
     {getItems()} 
                 </ul> 
     </nav>
