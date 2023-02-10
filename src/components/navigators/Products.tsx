@@ -8,7 +8,7 @@ export const Products: React.FC<Props> = (props) => {
     function activeLink(isActive: boolean): React.CSSProperties|undefined {
         let res: React.CSSProperties = {};
         if (isActive) {
-            res = {backgroundColor: "blue", color: "white"}
+            res = {backgroundColor: "yellow", color: "black"}
         }
         return res;
     }
