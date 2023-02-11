@@ -26,4 +26,11 @@
     .navigator-list {
         flex-direction: row;
     }
+    .navigator-list-layout {
+        flex-direction: row;
+    }
 }
+
+
+/* V.R. What about .navigator-list-products and .navigator-list-layout?
+    */
