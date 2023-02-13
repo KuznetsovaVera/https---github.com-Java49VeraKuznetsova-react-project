@@ -2,33 +2,36 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css'
-import { BreadProducts } from './components/pages/BreadProducts';
+
 import { Customers } from './components/pages/Customers';
-import { DairyProducts } from './components/pages/DairyProducts';
 import { Home } from './components/pages/Home';
 import { Orders } from './components/pages/Orders';
-import { layoutCongig } from './models/layout-config';
-import { productsCongig } from './models/products-config';
+import { layoutConfig } from './config/layout-config';
 import { Navigator } from './components/navigators/Navigator';
+import { Box, Typography } from '@mui/material';
+//import { Typography } from '@mui/material/styles/createTypography';
 
-
-
-function App() {
   
-  return <BrowserRouter>
-      <Routes>
-          <Route path='/' element={<Navigator navConf= {layoutCongig}/>}>
-              <Route index element={<Home/>}></Route>
-              <Route path='customers' element={<Customers/>}/>
-              <Route path='orders' element={<Orders/>}></Route>
-              <Route path='products' element={<Navigator navConf ={productsCongig}/>}>
-                    <Route path='dairy' element={<DairyProducts/>}/>
-                    <Route path='bread' element={<BreadProducts/>}/>
-              </Route>
-          </Route>
-              
-      </Routes>
-  </BrowserRouter>
-
-}
+    function App() {
+        return <BrowserRouter>
+            <Routes>
+                <Route path='/' element={<Navigator className={layoutConfig.className}
+                 routes={layoutConfig.routes}  />}>
+                    <Route index element={<Home/>}></Route>
+                    <Route path='customers' element={<Customers/>}/>
+                    <Route path='orders' element={<Orders/>}></Route>
+                    
+                </Route>
+                    
+            </Routes>
+        </BrowserRouter>
+      
+      }
 export default App;
+
+ /*
+ return <Box sx={{width: '50vw', height: '50vh', border: 'solid 1px red', 
+ textAlign: 'center',
+background: {xs: 'red', sm: 'green', md: 'black'}
+}}><Typography sx={{fontSize: {xs:'1.2em', sm:'2em'}}}>AnyText</Typography> </Box>
+*/

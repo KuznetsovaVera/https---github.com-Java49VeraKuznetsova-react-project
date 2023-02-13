@@ -1,4 +1,4 @@
 export type NavigatorProps = {
-    classNameList: string;
-    navigatorConfig: {navigatorTo: string, navigatorName: string}[]
+    className: string;
+    routes: {path: string, label: string}[];
 }
