@@ -2,7 +2,7 @@ import { AppBar, Box, Tab, Tabs } from "@mui/material";
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { NavigatorProps } from "../../models/navigatorProps";
-import "./navigator.css";
+//import "./navigator.css";
 
 type Props = {
     navConf: NavigatorProps;

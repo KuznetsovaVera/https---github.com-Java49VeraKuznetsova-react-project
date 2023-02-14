@@ -18,33 +18,32 @@ export function createRandomEmplyee(): EmployeeProps  {
     name: getRandomName()
    
   }
-  console.log ("EmpSer: RandEmpl:", emploeeys)
+    console.log ("EmpSer: RandEmpl:", emploeeys)
     return emploeeys;
 }
 
-export function minMaxMiddleAge(employees: Array<EmployeeProps>): 
+export function statAge(employees: Array<EmployeeProps>): 
     MinMaxMiddleProps {
   const currentDate = new Date();    
  
   const emplBirthDate: Array<string> = employees.map (el => el.birthDate);
-  let emplBirthNumber: Array<number> = emplBirthDate[0] ?
+  
+  const emplBirthNumber: Array<number> = emplBirthDate[0] ?
   getAges(emplBirthDate) : [0]
-console.log ("AgeB", emplBirthDate)
 
-   console.log ("MMMAge", employees, emplBirthDate, currentDate)
- 
   return {min: getMin(emplBirthNumber),
           max: getMax (emplBirthNumber),
           middle: getMiddle(emplBirthNumber) }
 }
 
-export function minMaxMiddleSalary(employees: Array<EmployeeProps>): 
+export function statSalary(employees: Array<EmployeeProps>): 
     MinMaxMiddleProps {
   const emplSalary: Array<number> = employees.map (el => el.salary);
- console.log("MMMS", emplSalary)
   return {min: getMin(emplSalary),
           max: getMax (emplSalary),
           middle: getMiddle(emplSalary) }
+  
+ 
 }
 
 
@@ -63,7 +62,7 @@ function getRandomName(): string {
   const LenghtName: number = 9;
   const randomLengthName = getRandomNumber(1, LenghtName, true, true);
   const numbersForName: number[][] = getRandomMatrix(1, randomLengthName,  'a'.charCodeAt(0), 'z'.charCodeAt(0));
- console.log("RanName", numbersForName)
+ //console.log("RanName", numbersForName)
   return numbersForName[0].reduce((res,el) => {
     res = res + String.fromCharCode(el);
     return res;
@@ -77,8 +76,6 @@ return emplBirthDate.map(el => getAge (el))
 }
 
 function getAge (dateString: string): number {
-  console.log ("getAge", dateString)
-
   const year: number = parseInt(dateString.substring(0,4));
   const month: number = parseInt(dateString.substring(5,7));
   const day: number = parseInt(dateString.substring(8,10));
@@ -91,6 +88,6 @@ function getAge (dateString: string): number {
   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
       age--;
   }
-  console.log ("Age2", year, month, day, age)
+  
   return age;
 }

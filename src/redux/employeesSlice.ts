@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { EmployeeProps } from "../models/employeeProps";
 
+const empl: EmployeeProps[]=[]
 const initialState = {
-    employees: [{}],
+    employees: empl,
     index: 0
    
 };
@@ -10,18 +12,9 @@ initialState: initialState,
 name: "empl",
 reducers: {
     addEmployee: (state, data) => {
-        console.log("sl, inp", data.payload) 
-        console.log ("sl, stEmp", state.employees[0])
-       state.employees.push(data.payload);
-       if (state.index === 0) {
-       state.employees.shift();  
-       state.index = 1; 
-       //state.employees= state.employees.slice(0,1);
-       console.log("sl, slice",state.employees)
-       }
-     //  
-    }
-
+      state.employees.push(data.payload);
+       console.log("Slice",state.employees)
+         }
 }
 })
 export const emplActions = EmployeesSlice.actions;

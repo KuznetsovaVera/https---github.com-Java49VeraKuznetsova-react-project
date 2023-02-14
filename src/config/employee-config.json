@@ -1,7 +1,7 @@
 
 {
     "MIN_ID": 0,
-    "MAX_ID": 999999,
+    "MAX_ID": 100000,
     "DEPARTMENTS": ["Development", "Managment", "IT-department", "QA"],
     "MIN_SALARY": 1000,
     "MAX_SALARY": 100000,
