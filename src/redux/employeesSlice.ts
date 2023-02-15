@@ -4,7 +4,7 @@ import { EmployeeProps } from "../models/employeeProps";
 const empl: EmployeeProps[]=[]
 const initialState = {
     employees: empl,
-    index: 0
+  
    
 };
 const EmployeesSlice = createSlice ({

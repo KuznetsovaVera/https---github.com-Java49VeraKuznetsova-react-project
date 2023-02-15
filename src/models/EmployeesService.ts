@@ -41,7 +41,7 @@ export function statSalary(employees: Array<EmployeeProps>):
   const emplSalary: Array<number> = employees.map (el => el.salary);
   return {min: getMin(emplSalary),
           max: getMax (emplSalary),
-          middle: getMiddle(emplSalary) }
+          middle: getMiddle(emplSalary)}
   
  
 }
@@ -49,6 +49,9 @@ export function statSalary(employees: Array<EmployeeProps>):
 
 function getMax (resArray: Array<number>): number {
     return  Math.max.apply(null, resArray)
+  /* V.R. It is possible without apply
+  return Math.max(...resArray);
+  */
 
 }
 function getMin (resArray: Array<number>): number {
@@ -56,7 +59,10 @@ function getMin (resArray: Array<number>): number {
 }
 function getMiddle (resArray: Array<number>): number {
     return (resArray.reduce ((rec, el) => (rec + el), 0)/resArray.length)
-}
+ /* V.R. 
+  return Math.trunc(resArray.reduce ((rec, el) => (rec + el), 0)/resArray.length);
+  */
+  }
 
 function getRandomName(): string {
   const LenghtName: number = 9;
@@ -82,6 +88,10 @@ function getAge (dateString: string): number {
 
   const today: Date = new Date();
   const birthDate: Date = new Date(year, month - 1, day) 
+
+  /* V.R. The following is more simple and better 
+  const birthDate: Date = new Date(dateString);
+  */
     
   let age: number = today.getFullYear() - birthDate.getFullYear();
   const m: number = today.getMonth() - birthDate.getMonth();
