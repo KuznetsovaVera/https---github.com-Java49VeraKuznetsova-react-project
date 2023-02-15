@@ -1,12 +1,11 @@
-
 {
-    "MIN_ID": 0,
-    "MAX_ID": 100000,
-    "DEPARTMENTS": ["Development", "Managment", "IT-department", "QA"],
-    "MIN_SALARY": 1000,
-    "MAX_SALARY": 100000,
-    "MIN_YEAR": 1940,
-    "MAX_YEAR": 2020
-
-} 
-
+    "minId": 100000000,
+    "maxId": 999999999,
+    "departments": [
+        "Development", "QA", "Audit", "Accounting", "Management"
+    ],
+    "minSalary": 5000,
+    "maxSalary": 50000,
+    "minBirthYear": 1950,
+    "maxBirthYear": 2003
+}

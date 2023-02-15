@@ -1,12 +1,13 @@
-import "../models/navigatorProps"
-import { NavigatorProps } from "../models/navigatorProps"
+import { NavigatorProps } from "../model/NavigatorProps"
+
 export const layoutConfig: NavigatorProps = {
-  className: 'navigator-list',
-  routes: [
-      {label: 'Employees', path: '/'},
-      {label: 'Add Employee', path: '/addEmployee'},
-      {label: 'Age Statictics', path: '/ageStatistics'},
-      {label: 'Salary Statictics', path: '/salaryStatistics'},
-    
-  ]
-  }
+    className: 'navigator-list',
+    routes: [
+        { label: 'Employees', path: '/' },
+        { label: 'Add Employees', path: '/add' },
+        { label: 'Age Statistics', path: '/statistics/age' },
+        { label: 'Salary Statistics', path: '/statistics/salary' }
+
+    ]
+}
+

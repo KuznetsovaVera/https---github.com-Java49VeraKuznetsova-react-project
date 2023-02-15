@@ -1,22 +1,15 @@
-import { Box } from "@mui/material"
-import ListItem from "@mui/material/ListItem"
-import { useSelector } from "react-redux"
-import { EmployeeProps } from "../../models/employeeProps"
-
-
-export const Employees: 
-React.FC = () => {
-const employees: EmployeeProps[] = useSelector <any, EmployeeProps[]>(state => state.empl.employees)
-   //console.log ("Empl: inp", employees)
-
-function getEmplItem (employees:Array<EmployeeProps>): JSX.Element[] {
-    return employees.map ((empl, ind) => 
-        <ListItem key={ind} >id: {empl.id}, name: {empl.name}, birthDate: {empl.birthDate},
-        department: {empl.department}, salary: {empl.salary}</ListItem>
-    )
-    }
-
-    return <Box borderColor="green" border={1}>
-                    {getEmplItem(employees)}      
-         </Box>
+import React from 'react';
+import {Box, List, ListItem, Typography} from '@mui/material';
+import { useSelector } from 'react-redux';
+import { Employee } from '../../model/Employee';
+export const Employees: React.FC = () => {
+    const employees = useSelector<any, Employee[]>(state => state.employees.employees);
+    return <Box>
+        <List>
+            {getListItems(employees)}
+        </List>
+    </Box>
+}
+function getListItems(employees: Employee[]): React.ReactNode {
+    return employees.map((empl, index) => <ListItem key={index}><Typography>{JSON.stringify(empl)}</Typography></ListItem>)
 }
