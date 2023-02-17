@@ -5,7 +5,8 @@ export function createRandomEmployee(): Employee {
     const {minId, maxId, departments,
          minBirthYear, maxBirthYear, minSalary, maxSalary} = employeeConfig;
     const id = getRandomNumber(minId, maxId,true, true);
-    const name = "name" + id;
+  
+   const name = "name" + id.toString().slice(0,3);
     const department = getElement(departments);
     const birthDate = getRandomDate(minBirthYear, maxBirthYear).toISOString()
     .slice(0, 10);
