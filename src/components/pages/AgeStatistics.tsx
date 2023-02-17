@@ -19,16 +19,11 @@ export const AgeStatistics: React.FC = () => {
     }
     console.log ("data", data)
     console.log ("statDateAge", statDateAge)
-/*
-    return <Box>
-        <Typography>{JSON.stringify(statAge(employees))}</Typography>
-      
-    </Box>
-    */
+
      return <Box>
      {Statistics(statDateAge)}
    
  </Box>
 }
 
-//{Statistics(statDateAge)}
+
