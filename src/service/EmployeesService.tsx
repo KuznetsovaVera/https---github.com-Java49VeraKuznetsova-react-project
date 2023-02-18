@@ -22,7 +22,7 @@ export function statAge(employees: Employee[]):
         const age = currentYear - new Date(empl.birthDate).getFullYear();
         if (res.minAge > age) {
             res.minAge = age;
-        } else if(res.maxAge < age) {
+        } if(res.maxAge < age) {
             res.maxAge = age
         }
         res.avgAge += age;
@@ -39,7 +39,7 @@ export function statSalary(employees: Employee[]):
         const {salary} = empl;
         if (res.minSalary > salary) {
             res.minSalary = salary;
-        } else if(res.maxSalary < salary) {
+        }  if(res.maxSalary < salary) {
             res.maxSalary = salary;
         }
         res.avgSalary += salary;
