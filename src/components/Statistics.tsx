@@ -2,32 +2,33 @@ import { Construction } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { DataGrid, GridColumns } from "@mui/x-data-grid";
 import React from "react";
+import { useSelector } from "react-redux";
+import { Employee } from "../model/Employee";
+import { statDataType } from "../service/EmployeesService";
 export type statiscticsProps ={
     name: string;
-    statDate: {
-        id: number,
-        minValue: number,
-        maxValue: number,
-        avgValue: number
-    }
+    statFunc: (empl: Employee[]) => statDataType;
 }
 
 
-export const Statistics: React.FC<statiscticsProps> = (statDateInp) => {
+export const Statistics: React.FC<statiscticsProps> = ({name, statFunc}) => {
+    const employees: Employee[] = useSelector<any, Employee[]>(state => state.company.employees)
+  
+  const row: statDataType = employees.length ? statFunc(employees) : {min: 0, max:0, avg: 0}
   
     const columns = React.useRef<GridColumns> ([
-        {field: 'minValue', headerName: 'Minimal Value',
+        {field: 'min', headerName: 'Minimal Value',
         flex: 1, headerAlign: 'center', align: 'center' },
-        {field: 'maxValue', headerName: 'Maximal Value',
+        {field: 'max', headerName: 'Maximal Value',
         flex: 1, headerAlign: 'center', align: 'center' },
-        {field: 'avgValue', headerName: 'Average Value',
+        {field: 'avg', headerName: 'Average Value',
         flex: 1, headerAlign: 'center', align: 'center' }
     ])
 
 
     return <Box sx={{height: '80vh', width: '80vw'}}>
-         <Typography sx={{textAlign: 'center', fontStyle: 'italic', fontWeight:'bold'}}>{statDateInp.name}</Typography> 
-    <DataGrid columns={columns.current} rows={[statDateInp.statDate]}/>
+         <Typography sx={{textAlign: 'center', fontStyle: 'italic', fontWeight:'bold'}}>{name}</Typography> 
+    <DataGrid columns={columns.current} rows={[{id: 1,...row}]}/>
       </Box>
 }
 
