@@ -1,35 +1,52 @@
-
 import { Box, Typography } from "@mui/material";
 import { DataGrid, GridColumns } from "@mui/x-data-grid";
 import React from "react";
-import { useSelector } from "react-redux";
-import { Employee } from "../model/Employee";
-import { statDataType } from "../service/EmployeesService";
-export type statiscticsProps ={
-    name: string;
-    statFunc: (empl: Employee[]) => statDataType;
+import './pages/table.css'
+type Props = {
+    title: string;
+    field: string;
+    objects: any[];
 }
+const columns: GridColumns = [
+    {
+        field: "minValue", headerName: "Minimal Value", headerAlign: "center",
+        align: "center", headerClassName: "header", flex: 1
+    },
+    {
+        field: "maxValue", headerName: "Maximal Value", headerAlign: "center",
+        align: "center", headerClassName: "header", flex: 1
+    },
+    {
+        field: "avgValue", headerName: "Average Value", headerAlign: "center",
+        align: "center", headerClassName: "header", flex: 1
+    }
+]
+export const Statistics: React.FC<Props> = ({ title, field, objects }) => {
+    let statistics: any = {id: 1};
+    if (objects.length > 0) {
+        const initialObject: { minValue: number, maxValue: number, avgValue: number } =
+        {
+            minValue: objects[0][field],
+            maxValue: objects[0][field],
+            avgValue: 0
+        };
+        statistics = objects.reduce((res, cur) => {
+            if (res.minValue > cur[field]) {
+                res.minValue = cur[field];
+            } else if(res.maxValue < cur[field]) {
+                res.maxValue = cur[field];
+            }
+            res.avgValue += cur[field]
+             return res;  
+        }, initialObject)
+        statistics.id = 1;
+        statistics.avgValue = Math.round(statistics.avgValue / objects.length);
+    }
 
 
-export const Statistics: React.FC<statiscticsProps> = ({name, statFunc}) => {
-    const employees: Employee[] = useSelector<any, Employee[]>(state => state.company.employees)
-  
-  const row: statDataType = employees.length ? statFunc(employees) : {min: 0, max:0, avg: 0}
-  
-    const columns = React.useRef<GridColumns> ([
-        {field: 'min', headerName: 'Minimal Value',
-        flex: 1, headerAlign: 'center', align: 'center' },
-        {field: 'max', headerName: 'Maximal Value',
-        flex: 1, headerAlign: 'center', align: 'center' },
-        {field: 'avg', headerName: 'Average Value',
-        flex: 1, headerAlign: 'center', align: 'center' }
-    ])
-
-
-    return <Box sx={{height: '80vh', width: '80vw'}}>
-         <Typography sx={{textAlign: 'center', fontStyle: 'italic', fontWeight:'bold'}}>{name}</Typography> 
-    <DataGrid columns={columns.current} rows={[{id: 1,...row}]}/>
-      </Box>
+    return <Box sx={{ width: "50vw", height: "30Vh" }}>
+        <Typography sx={{fontSize: "1.8em",
+         fontWeight: "bold", textAlign: "center"}}>{title}</Typography>
+        <DataGrid columns={columns} rows={[statistics]} />
+    </Box>
 }
-
-

@@ -1,15 +1,13 @@
 import React from 'react';
-import {Box} from "@mui/material";
-import { statAge } from '../../service/EmployeesService';
+import {useSelector} from 'react-redux';
+import { Employee } from '../../model/Employee';
 import { Statistics } from '../Statistics';
-
-
 export const AgeStatistics: React.FC = () => {
- 
-       return <Box>
-     {Statistics({name: "Age Statistics", statFunc: statAge})}
-   
- </Box>
+    const employees: Employee[] = useSelector<any, Employee[]>(state => state.company.employees)
+    const employeesAge = employees.map(empl => ({
+        ...empl, age: new Date().getFullYear() - new Date(empl.birthDate).getFullYear()
+    }))
+    return <Statistics title="Age Statistics" field="age" objects={employeesAge} />
 }
 
 

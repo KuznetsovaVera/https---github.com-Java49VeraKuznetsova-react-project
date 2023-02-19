@@ -1,13 +1,11 @@
 import React from 'react';
-import {Box} from "@mui/material";
-import { statSalary } from '../../service/EmployeesService';
+
+import {useSelector} from 'react-redux';
+import { Employee } from '../../model/Employee';
 import { Statistics } from '../Statistics';
 export const SalaryStatistics: React.FC = () => {
- 
-    return <Box>
-        {Statistics({name: "Salary Statistics", statFunc: statSalary})}
-    </Box>
+    const employees = useSelector<any, Employee[]>
+    (state => state.company.employees)
+    return <Statistics title="Salary Statistics" field="salary" objects={employees}/>
 }
-
-
 
