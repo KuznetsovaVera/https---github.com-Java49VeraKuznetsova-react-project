@@ -1,11 +1,14 @@
 import React from 'react';
 import {Box, List, ListItem, Typography} from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Employee } from '../../model/Employee';
-import { DataGrid, GridColumns } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem, GridColumns } from '@mui/x-data-grid';
+import { Delete } from '@mui/icons-material';
 import './table.css'
+import { employeesActions } from '../../redux/employees-slice';
 
 export const Employees: React.FC = () => {
+    const dispatch = useDispatch();
     const columns=React.useRef<GridColumns>([
         {field: 'name', headerClassName:'header', headerName: 'Employee Name',
          flex: 1, headerAlign: 'center', align: 'center' },
@@ -14,7 +17,13 @@ export const Employees: React.FC = () => {
         {field: 'department', headerName: 'Department',headerClassName:'header',
          flex: 1,headerAlign: 'center',align: 'center'},
         {field: 'salary', headerName: "Salary (NIS)", headerClassName:'header',
-        flex: 0.7, type: "number",headerAlign: 'center', align: 'center'}
+        flex: 0.7, type: "number",headerAlign: 'center', align: 'center'},
+        {field: 'actions', type: 'actions', getActions: (params) => {
+            return [
+                <GridActionsCellItem label="remove" icon={<Delete/>}
+                onClick={() => dispatch(employeesActions.removeEmployee(+params.id))}></GridActionsCellItem>
+            ]
+        }}
     ])
     const employees: Employee[] = useSelector<any, Employee[]>(state => state.company.employees);
     return <Box sx={{height: '80vh', width: '80vw'}}>
