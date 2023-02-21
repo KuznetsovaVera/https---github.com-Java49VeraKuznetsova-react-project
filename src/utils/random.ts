@@ -6,7 +6,7 @@ export function getRandomNumber(min: number, max: number,
        if (isMaxInclusive) {
            max++;
        }
-       if (min == max) {
+       if (min === max) {
            throw "min may not be equaled to max";
        }
        if (min > max) {

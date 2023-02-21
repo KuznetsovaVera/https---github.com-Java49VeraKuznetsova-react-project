@@ -1,7 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { DataGrid, GridColumns } from "@mui/x-data-grid";
 import React from "react";
-import './pages/table.css'
+import '../pages/table.css'
+
 type Props = {
     title: string;
     field: string;
