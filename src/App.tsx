@@ -17,24 +17,35 @@ const authUser: string = useSelector<any, string>(state => state.auth.authentica
 console.log (authUser)
 const[routes, setRoutes] = React.useState(layoutConfig.routes)
 
+//const [tabNumber, setTabNumber] = React.useState(0);
+//const navigate = useNavigate();
 
+
+//useEffect(() =>  navigate(routes[0].path),[])
+/*
+function changeTabNumber(event: any, newNumber: number) {
+    setTabNumber(newNumber);
+}
+*/
 React.useEffect(() => {
 
 let routRoutes: {path: string, label: string, flAdmin: boolean, flAuth: boolean}[]=[];
 if (!authUser) {
   routRoutes = layoutConfig.routes.filter (routes => 
-    routes.flAuth === false
-  )
+    !routes.flAuth 
+         )
+
  }
- else if (authUser.includes('admin')!== true) {
+ else if (!authUser.includes('admin')) {
   routRoutes = layoutConfig.routes.filter (routes => 
-    routes.flAdmin === true
-        )
+    routes.flAdmin )
+    
      }
  else {
   routRoutes = layoutConfig.routes.filter (routes => 
-    routes.flAuth === true
+                                 routes.flAuth
         )
+       
  }
  console.log ("1", routRoutes);
   setRoutes(routRoutes);

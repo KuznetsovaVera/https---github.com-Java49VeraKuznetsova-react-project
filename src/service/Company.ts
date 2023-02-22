@@ -9,21 +9,24 @@ export class Company {
         this.employees.push(empl)
     }
   updateEmployee (empl: Employee): void {
-  const emplUpdated = this.getEmployee(empl.id);
-  if (emplUpdated != null) {
-            this.removeEmployee(empl.id)
-            console.log (emplUpdated)
-            empl.birthDate = emplUpdated.birthDate;
-            empl.department = emplUpdated.department;
-            empl.name = emplUpdated.name
-            if (emplUpdated.salary  < SALARY) {
-                empl.salary = emplUpdated.salary+Math.round(emplUpdated.salary*PER_CENT/100);
+
+ const index: number = this.employees.findIndex(e => e.id === empl.id)
+
+ if (index >= 0) {
+
+            empl.birthDate = this.employees[index].birthDate;
+            empl.department = this.employees[index].department;
+            empl.name = this.employees[index].name
+            
+            if (this.employees[index].salary  < SALARY) {
+                empl.salary = this.employees[index].salary+Math.round(this.employees[index].salary*PER_CENT/100);
                 console.log("empl.salary", empl.salary);
                                             }
              else {
-                empl.salary = emplUpdated.salary-Math.round(emplUpdated.salary*PER_CENT/100);
+                empl.salary = this.employees[index].salary-Math.round(this.employees[index].salary*PER_CENT/100);
                  }  
-             this.addEmployee(empl);            
+                      
+             this.employees.splice(index, 1, empl )    
         }
        
        }

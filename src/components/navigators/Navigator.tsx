@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 export const Navigator: React.FC<NavigatorProps> = ({ routes }) => {
     const [tabNumber, setTabNumber] = React.useState(0);
     const navigate = useNavigate();
-    const authUser: string = useSelector<any, string>(state => state.auth.authenticated);
+    
     
     useEffect(() =>  navigate(routes[0].path),[])
     function changeTabNumber(event: any, newNumber: number) {
