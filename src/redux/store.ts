@@ -5,6 +5,8 @@ export const store = configureStore({
     reducer: {
         company: employeesReducer,
         auth: authReducer
+
     }
-    
+
+
 })
