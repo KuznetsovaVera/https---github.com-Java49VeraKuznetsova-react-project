@@ -30,9 +30,8 @@ for (let i:number = 0; i<randCount; i++) {
 
 setFlAlert(true);
 setTimeout(() => setFlAlert(false), 4000);
-//const timerID = setInterval(()=> setTimeout(() => { clearInterval(timerID); }, 9000));
 
-//setTimeout(()=>{clearTimeout('emplRandom.forEach (el => dispatch(employeesActions.addEmployee(el)))');}, 5000)
+
 }
 
 
@@ -54,4 +53,3 @@ setTimeout(() => setFlAlert(false), 4000);
     </Box>
 }
 
-//onClick={<Alert severity="info">`Number of random employees: ${value}'</Alert>}>

@@ -39,17 +39,15 @@ export const Employees: React.FC = () => {
                             dispatch(employeesActions.removeEmployee(+params.id))} />,
                     <GridActionsCellItem label="update" icon={<Edit />}
                         onClick={() => {
-                            console.log("setFlEdit1", flEdit);
+                           
                             setFlEdit(true);
                            const empl  = employees.find(el=> 
                                                el.id === +params.id)  
-                           if(empl) {
-                           
+                          if(empl) { 
                             emplEdit.current = {...empl};
-                            
-                            console.log("setFlEdit2", flEdit)
-                            
-                         }
+                        }
+                          
+                            console.log ("empEdit2", emplEdit.current);                        
                        
                         }
                         } />
@@ -67,13 +65,13 @@ export const Employees: React.FC = () => {
 
     }
     return <Box> 
-      {!flEdit && 
+      {!flEdit && !flAdd &&
        <Box sx={{ height: "70vh", width: "80vw" }}>
         <DataGrid columns={columns.current} rows={employees} />
         
     </Box>
     } 
-     {!flEdit && authUser.includes('admin') && 
+     {!flEdit && !flAdd && authUser.includes('admin') && 
     <Box sx={{ display:"flexbox", textAlign:"center" }}>
     <IconButton size="medium" color='primary'  onClick={addNewEmployee} >
    <PersonAdd></PersonAdd>
@@ -82,7 +80,7 @@ export const Employees: React.FC = () => {
     }
     {flEdit && !flAdd &&
     <EmployeeForm  submitFn={(employee) =>
-        {dispatch(employeesActions.addEmployee(employee));
+        {dispatch(employeesActions.updateEmployee(employee));
          setFlEdit(false)   
         return true;}} 
         employeeUpdate = {emplEdit.current}  />
@@ -99,22 +97,3 @@ export const Employees: React.FC = () => {
     </Box>
 
 }
-/*
-
-
-
-
- <IconButton size="medium" color='primary'  onClick={() => {}}>
-    Add employee</IconButton>
- const empl = employees.find(e => e.id == +params.id)
-if (empl) {
-    const factor = empl.salary > 20000 ? 0.8 : 1.2
-    const emplCopy = { ...empl, salary: empl.salary * factor };
-    dispatch(employeesActions.updateEmployee(emplCopy))
-}
-
-
-<EmployeeForm  submitFn={(employee) =>
-     {dispatch(employeesActions.addEmployee(employee));
-     return true;}}/>
-*/

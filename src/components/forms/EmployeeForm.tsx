@@ -13,6 +13,7 @@ export const EmployeeForm: React.FC<Props> = ({submitFn, employeeUpdate}) => {
     = employeeConfig;
     const [employee, setEmployee] =
      useState<Employee>(employeeUpdate ? employeeUpdate : initialEmployee);
+    console.log("employeeUpdate", employeeUpdate)
      function handlerName(event: any) {
         const name = event.target.value;
         const emplCopy = {...employee};
