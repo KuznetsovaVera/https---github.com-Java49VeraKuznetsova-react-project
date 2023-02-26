@@ -1,15 +1,10 @@
 import { Employee } from "../model/Employee";
+import employeeConfig from "../config/employee-config.json";
 import { getRandomNumber } from "../utils/random";
-import employeeConfig from "../config/employee-config.json"
-
 export class Company {
     private employees: Employee[] = [];
     addEmployee(empl: Employee): void {
-        const {minId, maxId, departments,
-            minBirthYear, maxBirthYear, minSalary, maxSalary} = employeeConfig;
-        console.log ("comp empl", empl)
-            empl.id = getRandomNumber(minId, maxId,true, true);
-            console.log ("comp empl2", empl) 
+        empl.id = getRandomNumber(employeeConfig.minId, employeeConfig.maxId);
         this.employees.push(empl);
     }
     updateEmployee(empl: Employee): void {

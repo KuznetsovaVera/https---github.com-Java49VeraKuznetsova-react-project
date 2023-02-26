@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Button, IconButton, List, ListItem, Typography } from '@mui/material';
+import React, { ReactNode, useRef, useState } from 'react';
+import { Box, IconButton, List, ListItem, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { Employee } from '../../model/Employee';
 import { DataGrid, GridActionsCellItem, GridColumns } from '@mui/x-data-grid';
@@ -7,13 +7,10 @@ import { Delete, Edit, PersonAdd } from '@mui/icons-material';
 import './table.css'
 import { employeesActions } from '../../redux/employees-slice';
 import { EmployeeForm } from '../forms/EmployeeForm';
-
 export const Employees: React.FC = () => {
     const dispatch = useDispatch();
     const authUser = useSelector<any, string>(state => state.auth.authenticated);
-    const [flEdit, setFlEdit] = React.useState<boolean>(false)
-    const emplEdit = React.useRef<Employee>();
-    const [flAdd, setFlAdd] = React.useState<boolean>(false);
+    const editId = useRef<number>(0);
     const columns = React.useRef<GridColumns>([
         {
             field: 'name', headerClassName: 'header', headerName: 'Employee Name',
@@ -39,16 +36,8 @@ export const Employees: React.FC = () => {
                             dispatch(employeesActions.removeEmployee(+params.id))} />,
                     <GridActionsCellItem label="update" icon={<Edit />}
                         onClick={() => {
-                           
-                            setFlEdit(true);
-                           const empl  = employees.find(el=> 
-                                               el.id === +params.id)  
-                          if(empl) { 
-                            emplEdit.current = {...empl};
-                        }
-                          
-                            console.log ("empEdit2", emplEdit.current);                        
-                       
+                            editId.current = +params.id;
+                            setFlEdit(true)
                         }
                         } />
                 ] : [];
@@ -56,44 +45,34 @@ export const Employees: React.FC = () => {
         }
 
     ])
-    const employees = useSelector<any, Employee[]>(state => state.company.employees);
+    const [flEdit, setFlEdit] = useState<boolean>(false);
+    const [flAdd, setFlAdd] = useState<boolean>(false);
     
-    function addNewEmployee (): void {
-     console.log("setFlAdd1", flAdd)
-       setFlAdd(true);
-        console.log("setFlAdd2", flAdd)
-
+    const employees = useSelector<any, Employee[]>(state => state.company.employees);
+    function getComponent(): ReactNode {
+        let res: ReactNode = <Box sx={{ height: "70vh", width: "80vw" }}>
+                <DataGrid columns={columns.current} rows={employees}/>
+                {authUser.includes("admin") && <IconButton onClick={() => setFlAdd(true)}><PersonAdd/></IconButton>}
+        </Box>
+        if (flEdit) {
+            res = <EmployeeForm submitFn={function (empl: Employee): boolean {
+                dispatch(employeesActions.updateEmployee(empl));
+                setFlEdit(false);
+                return true;
+            } } employeeUpdate = {employees.find(empl => empl.id == editId.current)} />
+        } else if (flAdd) {
+            res = <EmployeeForm submitFn={function (empl: Employee): boolean {
+                dispatch(employeesActions.addEmployee(empl));
+                setFlAdd(false);
+                return true;
+            } }/>
+        }
+        return res;
     }
-    return <Box> 
-      {!flEdit && !flAdd &&
-       <Box sx={{ height: "70vh", width: "80vw" }}>
-        <DataGrid columns={columns.current} rows={employees} />
-        
+    return <Box sx={{ height: "80vh", width: "80vw" }}>
+        {getComponent()}
     </Box>
-    } 
-     {!flEdit && !flAdd && authUser.includes('admin') && 
-    <Box sx={{ display:"flexbox", textAlign:"center" }}>
-    <IconButton size="medium" color='primary'  onClick={addNewEmployee} >
-   <PersonAdd></PersonAdd>
-    </IconButton>
-    </Box>
-    }
-    {flEdit && !flAdd &&
-    <EmployeeForm  submitFn={(employee) =>
-        {dispatch(employeesActions.updateEmployee(employee));
-         setFlEdit(false)   
-        return true;}} 
-        employeeUpdate = {emplEdit.current}  />
-
-    }
-    {flAdd && !flEdit &&
-        <EmployeeForm  submitFn={(employee) =>
-            {dispatch(employeesActions.addEmployee(employee));
-            setFlAdd(false) 
-            return true;}} 
-              />
-    }
-  
-    </Box>
-
+}
+function getListItems(employees: Employee[]): React.ReactNode {
+    return employees.map((empl, index) => <ListItem key={index}><Typography>{JSON.stringify(empl)}</Typography></ListItem>)
 }

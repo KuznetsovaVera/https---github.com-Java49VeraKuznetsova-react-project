@@ -1,55 +1,42 @@
-import { Alert, Box, Button, TextField } from "@mui/material"
-import { createRandomEmployee } from "../../service/EmployeesService";
-//import { AddEmployee } from "./AddEmployee";
-//import {addEmployee} from "../../service/Company"
-import { employeesActions } from "../../redux/employees-slice";
-import { useDispatch } from "react-redux";
-import { Employee } from "../../model/Employee";
-
 import React from "react";
-const MIN_RANDOM: number = 1;
-const MAX_RANDOM: number = 50;
-
+import {Box, TextField, Button, Alert} from '@mui/material';
+import {useDispatch} from 'react-redux';
+import generationConfig from '../../config/generation-config.json';
+import { employeesActions } from "../../redux/employees-slice";
+import { createRandomEmployee } from "../../service/EmployeesService";
 export const Generation: React.FC = () => {
     const dispatch = useDispatch();
-    const [randCount, setRandCount] = React.useState<number>(0);
-    const [flAlert, setFlAlert] = React.useState<boolean> (false);
+    const {defaultAmount, minAmount, maxAmount, alertTimeout} = generationConfig;
+    const [amount, setAmount] = React.useState<number>(defaultAmount);
+    const [flAlertSuccess, setAlertAccess] = React.useState<boolean>(false);
+    function handlerAmount(event: any): void {
+        setAmount(+event.target.value);
+    }
+    function onSubmitFn(event: any) {
+        event.preventDefault();
+        for(let i = 0; i < amount; i++) {
+            dispatch(employeesActions.addEmployee(createRandomEmployee()));
+        }
+        setAlertAccess(true);
+        setTimeout(() => setAlertAccess(false),alertTimeout );
+    }
     
-  // const emplRandom: Employee[] = [];  
-
-function handlerGeneration (event: any) {
-setRandCount(event.target.value)
-
-}
-
-function addRandomEmployees (): void {
-
-for (let i:number = 0; i<randCount; i++) {
-  dispatch(employeesActions.addEmployee(createRandomEmployee()));
-}
-
-setFlAlert(true);
-setTimeout(() => setFlAlert(false), 4000);
-
-
-}
 
 
     return <Box>
-
-<TextField label="random" fullWidth required 
-            type="number" onChange={handlerGeneration}
-              helperText={`enter number of random employees [0 - 50]`}
+        <form onSubmit={onSubmitFn} >
+            <TextField label="amount of employee generated" fullWidth required 
+            type="number" onChange={handlerAmount}
+             value={amount}
+              helperText={`enter amount of employee objects in range [${minAmount}-${maxAmount}]`}
               inputProps = {{
-                min: MIN_RANDOM,
-                max: MAX_RANDOM
-              }}/>  
-     <Button type="submit" onClick={addRandomEmployees}>Send</Button>
-  {flAlert && 
-     <Box >  
-     <Alert severity="info">Number of random employees: {randCount}</Alert>
-     </Box>
-    }
+                min: `${minAmount}`,
+                max: `${maxAmount}`
+              }} />
+              <Button type="submit">Generate</Button>
+
+        </form>
+        {flAlertSuccess && <Alert severity="success">Generated {amount} random employee objects</Alert>}
+         
     </Box>
 }
-

@@ -36,11 +36,11 @@ function App() {
            routes={routes}  />}>
               <Route index element={<Employees/>}/>
               <Route path='add' element={<AddEmployee/>}/>
-              <Route path='generation' element={<Generation/>}/>
               <Route path='statistics/age' element={<AgeStatistics/>}/>
               <Route path='statistics/salary' element={<SalaryStatistics/>}/>
               <Route path='login' element={<Login/>}/>
               <Route path='logout' element={<Logout/>}/>
+              <Route path='generation' element={<Generation/>}/>
               
           </Route>
               
