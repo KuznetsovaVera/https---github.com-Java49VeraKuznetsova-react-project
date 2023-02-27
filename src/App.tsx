@@ -1,3 +1,28 @@
+import { Grid, Paper } from "@mui/material";
+//import './App.css'
+
+function App() {
+    return <Grid container rowSpacing={8} columnSpacing={4}
+    justifyContent={"center"}>
+        <Grid item xs={10} sm={4} md={3}>
+          <Paper sx={{fontSize: {xs:"1.5em", sm:"1.2em", md:"1em"}}}>xs=6, sm=4</Paper>
+        </Grid>
+        <Grid item xs={10} sm={6} md={3}>
+          <Paper>xs=4, sm=6</Paper>
+        </Grid>
+        <Grid item xs={10} sm={6} md={3}>
+          <Paper>xs=4, sm=6</Paper>
+        </Grid>
+        <Grid item xs={10} sm={4} md={3}>
+          <Paper>xs=6, sm=4</Paper>
+        </Grid>
+    </Grid>
+}
+
+
+
+
+/*
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navigator } from './components/navigators/Navigator';
 import './App.css'
@@ -48,4 +73,6 @@ function App() {
   </BrowserRouter>
 
 }
+*/
+
 export default App;
