@@ -23,6 +23,7 @@ export class Company {
     removeEmployee(id: number): void {
         const index: number = this.employees.findIndex(e => e.id === id);
         index >= 0 && this.employees.splice(index, 1) ;
+        console.log ("remove", id)
     }
     getAllEmployees(): Employee[] {
         return this.employees.slice();

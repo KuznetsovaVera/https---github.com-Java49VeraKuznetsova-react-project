@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, TextField, Button, Alert} from '@mui/material';
+import {Box, TextField, Button, Alert, Grid} from '@mui/material';
 import {useDispatch} from 'react-redux';
 import generationConfig from '../../config/generation-config.json';
 import { employeesActions } from "../../redux/employees-slice";
@@ -24,7 +24,9 @@ export const Generation: React.FC = () => {
 
 
     return <Box>
+      
         <form onSubmit={onSubmitFn} >
+        
             <TextField label="amount of employee generated" fullWidth required 
             type="number" onChange={handlerAmount}
              value={amount}
@@ -33,10 +35,13 @@ export const Generation: React.FC = () => {
                 min: `${minAmount}`,
                 max: `${maxAmount}`
               }} />
+             
+              <Grid item xs = {6} sm={6}>
               <Button type="submit">Generate</Button>
-
+              </Grid>
         </form>
+       
         {flAlertSuccess && <Alert severity="success">Generated {amount} random employee objects</Alert>}
-         
+        
     </Box>
 }

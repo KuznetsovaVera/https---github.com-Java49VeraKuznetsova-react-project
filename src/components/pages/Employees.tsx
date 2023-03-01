@@ -7,10 +7,17 @@ import { Delete, Edit, PersonAdd } from '@mui/icons-material';
 import './table.css'
 import { employeesActions } from '../../redux/employees-slice';
 import { EmployeeForm } from '../forms/EmployeeForm';
+//import './DialogAlert' ;
+import { Confirmation } from './Confirmation';
+import { Console } from 'console';
+
 export const Employees: React.FC = () => {
     const dispatch = useDispatch();
     const authUser = useSelector<any, string>(state => state.auth.authenticated);
     const editId = useRef<number>(0);
+    const idRemove = useRef<number>(0)
+    const [flRemove, setFlRemove] =useState<boolean>(false)
+    let rem: number = -1;
     const columns = React.useRef<GridColumns>([
         {
             field: 'name', headerClassName: 'header', headerName: 'Employee Name',
@@ -32,14 +39,29 @@ export const Employees: React.FC = () => {
             field: 'actions', type: "actions", getActions: (params) => {
                 return authUser.includes('admin') ? [
                     <GridActionsCellItem label="remove" icon={<Delete />}
-                        onClick={() =>
-                            dispatch(employeesActions.removeEmployee(+params.id))} />,
+                               /* onClick={() =>
+                            { 
+                                    dispatch(employeesActions.removeEmployee(+params.id));
+                                  
+                                }
+                            } */
+                          
+                          
+                          onClick={()=> { console.log("params",+params.id)
+                          rem = +params.id 
+                          setFlRemove(true)
+                          idRemove.current = +params.id
+                        console.log("idRemove",idRemove.current, rem, flRemove)
+                    }
+                       }
+                            />,
                     <GridActionsCellItem label="update" icon={<Edit />}
                         onClick={() => {
                             editId.current = +params.id;
                             setFlEdit(true)
                         }
-                        } />
+                        } />,
+                       
                 ] : [];
             }
         }
@@ -49,6 +71,8 @@ export const Employees: React.FC = () => {
     const [flAdd, setFlAdd] = useState<boolean>(false);
     
     const employees = useSelector<any, Employee[]>(state => state.company.employees);
+    
+
     function getComponent(): ReactNode {
         let res: ReactNode = <Box sx={{ height: "70vh", width: "80vw" }}>
                 <DataGrid columns={columns.current} rows={employees}/>
@@ -61,11 +85,28 @@ export const Employees: React.FC = () => {
                 return true;
             } } employeeUpdate = {employees.find(empl => empl.id == editId.current)} />
         } else if (flAdd) {
-            res = <EmployeeForm submitFn={function (empl: Employee): boolean {
+            res = 
+                <EmployeeForm submitFn={function (empl: Employee): boolean {
                 dispatch(employeesActions.addEmployee(empl));
                 setFlAdd(false);
                 return true;
             } }/>
+        }
+        else if (flRemove) {
+          
+             res = <Confirmation confirmFn={function (id:number):boolean {
+                dispatch(employeesActions.removeEmployee(idRemove.current))
+               // console.log("1", idRemove.current, rem, flRemove)
+               // idRemove.current = 0;
+               setFlRemove(false);
+                return true; 
+             }} messageInp = 'Are you sure to remove employee with ID'
+                idEmpl={idRemove.current} 
+                cancelFn={function (): boolean {
+                    setFlRemove(false);
+                    return true;
+                }}/>
+              
         }
         return res;
     }

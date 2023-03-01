@@ -1,7 +1,8 @@
-import React, {useState} from "react";
-import {FormControl, TextField, InputLabel, Select, Box, MenuItem, Button} from '@mui/material';
+import React, {ReactNode, useState} from "react";
+import {FormControl, TextField, InputLabel, Select, Box, MenuItem, Button, Grid, Paper} from '@mui/material';
 import employeeConfig from '../../config/employee-config.json';
 import { Employee } from "../../model/Employee";
+import { Confirmation } from "../pages/Confirmation";
 type Props = {
     submitFn: (empl: Employee)=>boolean,
     employeeUpdate?: Employee
@@ -13,6 +14,9 @@ export const EmployeeForm: React.FC<Props> = ({submitFn, employeeUpdate}) => {
     = employeeConfig;
     const [employee, setEmployee] =
      useState<Employee>(employeeUpdate ? employeeUpdate : initialEmployee);
+    const[flSubmit, setFlSubmit] = React.useState<boolean>(false)
+    const message: string = employeeUpdate ? 'Are you sure to change employee with ID' : 
+     'Are you sure to add new employee'
      function handlerName(event: any) {
         const name = event.target.value;
         const emplCopy = {...employee};
@@ -38,16 +42,43 @@ export const EmployeeForm: React.FC<Props> = ({submitFn, employeeUpdate}) => {
         setEmployee(emplCopy);
      }
      function onSubmitFn(event: any) {
+       console.log('onSubmit', employee)
+       const emplCopy = {...employee};
+       console.log('onSubmit2', employee)
+       setEmployee(employee);
+      
+                      
         event.preventDefault();
-        submitFn(employee);
+        setFlSubmit(true);
+      // submitFn(employee);
         document.querySelector('form')!.reset();
      }
      function onResetFn(event: any) {
         setEmployee(employeeUpdate ? employeeUpdate : initialEmployee);
      }
-
-    return <Box>
+function getEmployee (): Employee{
+    const emplCopy = {...employee};
+    setEmployee(emplCopy);
+    return employee;
+}
+    return   <Box>
+         <Grid container columnSpacing={4} rowSpacing={-15} 
+          justifyContent='space-around' alignItems="center"> 
+      <Grid item xs ={11}> 
+      <Paper elevation={3} background-color = 'grey'> 
         <form onSubmit={onSubmitFn} onReset={onResetFn}>
+        <Grid container   justifyContent='center' alignItems={'center'}
+         rowSpacing={3} columnSpacing={4}>
+            <Grid  item xs={11} sm={5} md={8}>
+            <TextField type="text" required fullWidth label="Employee name" 
+            helperText="enter Employee name" onChange={handlerName} 
+            value={employee.name} inputProps = {{
+                readOnly: !!employeeUpdate
+
+            }}/>
+          
+            </Grid>
+            <Grid item xs={11} sm = {5} md={5} >
             <FormControl fullWidth required>
                 <InputLabel id="select-department-id">Department</InputLabel>
                 <Select labelId="select-department-id" label="Department"
@@ -56,12 +87,9 @@ export const EmployeeForm: React.FC<Props> = ({submitFn, employeeUpdate}) => {
                     {departments.map(dep => <MenuItem value={dep}>{dep}</MenuItem>)}
                 </Select>
             </FormControl>
-            <TextField type="text" required fullWidth label="Employee name" 
-            helperText="enter Employee name" onChange={handlerName} 
-            value={employee.name} inputProps = {{
-                readOnly: !!employeeUpdate
-
-            }}/>
+            </Grid>
+           
+            <Grid  item xs = {11} sm={5} md={5}>
             <TextField type="date" required fullWidth label="birthDate" 
             value={employee.birthDate} inputProps  = {{
                 readOnly: !!employeeUpdate,
@@ -70,6 +98,8 @@ export const EmployeeForm: React.FC<Props> = ({submitFn, employeeUpdate}) => {
             }} InputLabelProps = {{
                 shrink: true
             }} onChange={handlerBirthdate}/>
+            </Grid>
+            <Grid container item xs = {11} sm={5} md={6}>
             <TextField label="salary" fullWidth required 
             type="number" onChange={handlerSalary}
              value={employee.salary || ''}
@@ -80,8 +110,31 @@ export const EmployeeForm: React.FC<Props> = ({submitFn, employeeUpdate}) => {
               }} InputLabelProps = {{
                 shrink: !!employeeUpdate || !!employee.salary
             }}/>
-              <Button type="submit">Submit</Button>
-            <Button type="reset">Reset</Button>
+            </Grid>
+            <Grid container justifyContent={'center'} rowSpacing={-10}>
+               <Button type="submit">Submit</Button>
+               <Button type="reset">Reset</Button>
+            </Grid>
+            </Grid>
         </form>
-    </Box>
+        </Paper>
+        </Grid>
+        </Grid>
+       {flSubmit &&
+        <Confirmation confirmFn={function (empl:Employee):boolean {
+        submitFn(employee);
+        setFlSubmit(false);
+        return true; 
+     }} messageInp = {message}
+       // idEmpl={employee.id} 
+        employeeCurrent={employee}
+        cancelFn={function (): boolean {
+            setFlSubmit(false);
+            return true;
+        
+        }}/>
+
+       }
+       
+       </Box>
 }
