@@ -14,10 +14,8 @@ import { Console } from 'console';
 export const Employees: React.FC = () => {
     const dispatch = useDispatch();
     const authUser = useSelector<any, string>(state => state.auth.authenticated);
-    const editId = useRef<number>(0);
-    const idRemove = useRef<number>(0)
-    const [flRemove, setFlRemove] =useState<boolean>(false)
-    let rem: number = -1;
+ 
+   
     const columns = React.useRef<GridColumns>([
         {
             field: 'name', headerClassName: 'header', headerName: 'Employee Name',
@@ -69,7 +67,12 @@ export const Employees: React.FC = () => {
     ])
     const [flEdit, setFlEdit] = useState<boolean>(false);
     const [flAdd, setFlAdd] = useState<boolean>(false);
-    
+    const[open, setOpen] = useState(false);
+    const title = useRef<string>("");
+    const content = useRef<string>("");
+    const confirmFn = useRef<(isOk:boolean)=>void>();
+
+
     const employees = useSelector<any, Employee[]>(state => state.company.employees);
     
 
@@ -112,8 +115,7 @@ export const Employees: React.FC = () => {
     }
     return <Box sx={{ height: "80vh", width: "80vw" }}>
         {getComponent()}
+        <Confirmation confirmFn={confirmFn.current} title = {title.current}
+        content = {content.current}></Confirmation>
     </Box>
-}
-function getListItems(employees: Employee[]): React.ReactNode {
-    return employees.map((empl, index) => <ListItem key={index}><Typography>{JSON.stringify(empl)}</Typography></ListItem>)
 }
