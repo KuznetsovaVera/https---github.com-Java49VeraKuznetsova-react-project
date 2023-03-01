@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux';
 import { Login } from './components/pages/Login';
 import { Logout } from './components/pages/Logout';
 import { Generation } from './components/pages/Generation';
+import { NavigatorDispatch } from "./components/navigators/NavigatorDispatch";
 
 
 function App() {
@@ -38,7 +39,7 @@ function App() {
     }, [authUser])
   return <BrowserRouter>
       <Routes>
-          <Route path='/' element={<Navigator 
+          <Route path='/' element={<NavigatorDispatch 
            routes={routes}  />}>
               <Route index element={<Employees/>}/>
               <Route path='add' element={<AddEmployee/>}/>

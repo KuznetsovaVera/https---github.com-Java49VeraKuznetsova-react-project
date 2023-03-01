@@ -7,15 +7,11 @@ import { Delete, Edit, PersonAdd } from '@mui/icons-material';
 import './table.css'
 import { employeesActions } from '../../redux/employees-slice';
 import { EmployeeForm } from '../forms/EmployeeForm';
-//import './DialogAlert' ;
-import { Confirmation } from './Confirmation';
-import { Console } from 'console';
-
+import { Confirmation } from '../common/Confirmation';
 export const Employees: React.FC = () => {
     const dispatch = useDispatch();
     const authUser = useSelector<any, string>(state => state.auth.authenticated);
- 
-   
+    const editId = useRef<number>(0);
     const columns = React.useRef<GridColumns>([
         {
             field: 'name', headerClassName: 'header', headerName: 'Employee Name',
@@ -37,29 +33,14 @@ export const Employees: React.FC = () => {
             field: 'actions', type: "actions", getActions: (params) => {
                 return authUser.includes('admin') ? [
                     <GridActionsCellItem label="remove" icon={<Delete />}
-                               /* onClick={() =>
-                            { 
-                                    dispatch(employeesActions.removeEmployee(+params.id));
-                                  
-                                }
-                            } */
-                          
-                          
-                          onClick={()=> { console.log("params",+params.id)
-                          rem = +params.id 
-                          setFlRemove(true)
-                          idRemove.current = +params.id
-                        console.log("idRemove",idRemove.current, rem, flRemove)
-                    }
-                       }
-                            />,
+                        onClick={() => removeEmployee(+params.id)
+                            } />,
                     <GridActionsCellItem label="update" icon={<Edit />}
                         onClick={() => {
                             editId.current = +params.id;
                             setFlEdit(true)
                         }
-                        } />,
-                       
+                        } />
                 ] : [];
             }
         }
@@ -67,15 +48,33 @@ export const Employees: React.FC = () => {
     ])
     const [flEdit, setFlEdit] = useState<boolean>(false);
     const [flAdd, setFlAdd] = useState<boolean>(false);
-    const[open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
     const title = useRef<string>("");
     const content = useRef<string>("");
-    const confirmFn = useRef<(isOk:boolean)=>void>();
-
-
+    const confirmFn = useRef<(isOk: boolean)=>void>((isOK)=> {});
     const employees = useSelector<any, Employee[]>(state => state.company.employees);
-    
-
+    const idRemoved = useRef<number>(0);
+    const employeeToUpdate = useRef<Employee>();
+    function removeEmployee(id: number) {
+        title.current = "Remove Employee object?";
+        const employee = employees.find(empl => empl.id == id);
+        content.current = `You are going remove employee with id ${employee?.name}`;
+        idRemoved.current = id;
+        confirmFn.current = actualRemove;
+        setOpen(true);
+    }
+    function actualRemove(isOk: boolean) {
+        if (isOk) {
+            dispatch(employeesActions.removeEmployee(idRemoved.current))
+        }
+        setOpen(false);
+    }
+    function actualUpdate(isOk: boolean) {
+        if(isOk) {
+            dispatch(employeesActions.updateEmployee(employeeToUpdate.current));
+        }
+        setOpen(false);
+    }
     function getComponent(): ReactNode {
         let res: ReactNode = <Box sx={{ height: "70vh", width: "80vw" }}>
                 <DataGrid columns={columns.current} rows={employees}/>
@@ -83,39 +82,27 @@ export const Employees: React.FC = () => {
         </Box>
         if (flEdit) {
             res = <EmployeeForm submitFn={function (empl: Employee): boolean {
-                dispatch(employeesActions.updateEmployee(empl));
+                
+                title.current = "Update Employee object?";
+                content.current = `You are going update Employee ${empl.name}`;
+                employeeToUpdate.current = empl;
+                confirmFn.current = actualUpdate;
+                setOpen(true);
                 setFlEdit(false);
                 return true;
             } } employeeUpdate = {employees.find(empl => empl.id == editId.current)} />
         } else if (flAdd) {
-            res = 
-                <EmployeeForm submitFn={function (empl: Employee): boolean {
+            res = <EmployeeForm submitFn={function (empl: Employee): boolean {
                 dispatch(employeesActions.addEmployee(empl));
                 setFlAdd(false);
                 return true;
             } }/>
         }
-        else if (flRemove) {
-          
-             res = <Confirmation confirmFn={function (id:number):boolean {
-                dispatch(employeesActions.removeEmployee(idRemove.current))
-               // console.log("1", idRemove.current, rem, flRemove)
-               // idRemove.current = 0;
-               setFlRemove(false);
-                return true; 
-             }} messageInp = 'Are you sure to remove employee with ID'
-                idEmpl={idRemove.current} 
-                cancelFn={function (): boolean {
-                    setFlRemove(false);
-                    return true;
-                }}/>
-              
-        }
         return res;
     }
     return <Box sx={{ height: "80vh", width: "80vw" }}>
         {getComponent()}
-        <Confirmation confirmFn={confirmFn.current} title = {title.current}
-        content = {content.current}></Confirmation>
+        <Confirmation confirmFn={confirmFn.current} open={open}
+         title={title.current} content={content.current}></Confirmation>
     </Box>
 }
