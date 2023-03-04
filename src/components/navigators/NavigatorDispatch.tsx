@@ -6,7 +6,8 @@ import { Navigator } from "./Navigator"
 
 export const NavigatorDispatch: React.FC<NavigatorProps> = ({routes}) => {
     const noMobile = useMediaQuery('(min-width:900px)');
-    return <Box>
+ 
+   return <Box>
     {noMobile ? <Navigator routes={routes}/> :
     <NavigatorMobile routes={routes}/>}
     </Box>

@@ -37,6 +37,7 @@ function App() {
         }
         setRoutes(getRoutes());
     }, [authUser])
+
   return <BrowserRouter>
       <Routes>
           <Route path='/' element={<NavigatorDispatch 
