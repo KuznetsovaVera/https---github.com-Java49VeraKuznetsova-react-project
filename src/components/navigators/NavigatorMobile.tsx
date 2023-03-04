@@ -25,13 +25,13 @@ export const NavigatorMobile: React.FC<NavigatorProps> = ({ routes }) => {
         if(routes.length != 0) {
               navigate(routes[0].path)
         }
-        setTabNumber(0)
-      
-    },[routes]);
+      //  setTabNumber(0)
+        },[routes]);
   
   function getListMenu():ReactNode {
    return routes.map((r,index)=> <Divider>
-        <ListItem button divider component={Link} to={r.path} key={index}>
+   
+        <ListItem divider component={Link} to={r.path} key={index}>
            <ListItemText primary= {r.label} />
         </ListItem>
     </Divider> )
