@@ -1,78 +1,48 @@
-import { Menu } from "@mui/icons-material";
-import { AppBar, Box, Divider, Drawer, 
-    List, ListItem, ListItemText, Typography,  IconButton, Toolbar } from "@mui/material";
-import React, { ReactNode, useEffect } from "react";
-import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
-import { Employee } from "../../model/Employee";
-import { NavigatorProps } from "../../model/NavigatorProps";
-import { RouteType } from "../../model/RouteType";
-//import navigatorConfig from '../../config/navigator-config.json'
-
-
+import React, { useEffect, useState } from 'react';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Menu } from '@mui/icons-material'
+import { AppBar, IconButton, ListItem, Toolbar, Typography, Drawer, List, Box } from '@mui/material';
+import { NavigatorProps } from '../../model/NavigatorProps';
 export const NavigatorMobile: React.FC<NavigatorProps> = ({ routes }) => {
-   // TODO Navigator based on Drower
-   const [tabNumber, setTabNumber] = React.useState(0);
-   const [open, setOpen] = React.useState<boolean>(false);
-   const location = useLocation();
-   //const{drawerWidth} = navigatorConfig;
-   const handlerDrawerOpen = () => {
-    setOpen(true);
-     }
-   const handlerDrawerClose =() => {
-    setOpen(false)
-   }
-  
+
+    const [flOpen, setOpen] = useState<boolean>(false);
+
+    const location = useLocation();
     const navigate = useNavigate();
     useEffect(() => {
-        if(routes.length != 0) {
-              navigate(routes[0].path)
+        if (routes.length > 0) {
+            navigate(routes[0].path);
         }
-      //  setTabNumber(0)
-        },[routes]);
-  
-  function getListMenu():ReactNode {
-   return routes.map((r,index)=> <Divider>
-   
-        <ListItem divider component={Link} to={r.path} key={index}>
-           <ListItemText primary= {r.label} />
-        </ListItem>
-    </Divider> )
-  }
 
-  function getCurPageName (): string {
-    /*
-    const curPageName: string =  routes.reduce((curLab, r) => {
-      if(location.pathname === r.path)
-        curLab = r.label;
-        return curLab;
-    },'')
-    */
-   const curRoute:RouteType | undefined = routes.find(r => location.pathname === r.path)
-    return curRoute? curRoute.label : '';
+    }, [routes]);
+    function getTitle(): string {
+        const route = routes.find(r => r.path === location.pathname)
+        return route ? route.label : '';
     }
 
 
-    return <Box sx={{ marginTop: "25vh"}}>
-    <AppBar sx={{ backgroundColor: "lightgray" }}>
-      <Toolbar variant="regular">
-       <IconButton color="primary" onClick={handlerDrawerOpen}>
-        <Menu/>   </IconButton>
-       <Typography component='h3' color={'primary'}> 
-       {getCurPageName()}  </Typography>
-         </Toolbar>
-    </AppBar>
-        {(open) &&
-        <Drawer variant="permanent" anchor="left" open={open}
-         onClick={handlerDrawerClose}>
-            {getListMenu()}
-        </Drawer>
-        }
-          
-    <Outlet></Outlet>
-</Box>
-        
+    function toggleOpen() {
+        setOpen(!flOpen);
+    }
+    function getListItems(): React.ReactNode {
+        return routes.map(i => <ListItem onClick={toggleOpen} component={Link} to={i.path} key={i.path}>{i.label}</ListItem>)
+    }
+    return <Box sx={{ marginTop: { xs: "15vh", sm: "20vh" } }}>
+        <AppBar position="fixed">
+            <Toolbar><IconButton onClick={toggleOpen} sx={{ color: 'white' }}>
+                <Menu />
+            </IconButton>
+                <Typography sx={{ width: "100%", textAlign: "center", fontSize: "1.5em" }}>
+                    {getTitle()}
+                </Typography>
+                <Drawer open={flOpen} onClose={toggleOpen} anchor="left">
+                    <List>
+                        {getListItems()}
+                    </List>
+                </Drawer></Toolbar>
+
+        </AppBar>
+        <Outlet></Outlet>
+    </Box>
 }
-
-
-
 
