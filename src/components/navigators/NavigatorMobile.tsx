@@ -3,7 +3,9 @@ import { AppBar, Box, Divider, Drawer,
     List, ListItem, ListItemText, Typography,  IconButton, Toolbar } from "@mui/material";
 import React, { ReactNode, useEffect } from "react";
 import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
+import { Employee } from "../../model/Employee";
 import { NavigatorProps } from "../../model/NavigatorProps";
+import { RouteType } from "../../model/RouteType";
 //import navigatorConfig from '../../config/navigator-config.json'
 
 
@@ -38,13 +40,17 @@ export const NavigatorMobile: React.FC<NavigatorProps> = ({ routes }) => {
   }
 
   function getCurPageName (): string {
+    /*
     const curPageName: string =  routes.reduce((curLab, r) => {
       if(location.pathname === r.path)
         curLab = r.label;
         return curLab;
     },'')
-    return curPageName;
+    */
+   const curRoute:RouteType | undefined = routes.find(r => location.pathname === r.path)
+    return curRoute? curRoute.label : '';
     }
+
 
     return <Box sx={{ marginTop: "25vh"}}>
     <AppBar sx={{ backgroundColor: "lightgray" }}>
