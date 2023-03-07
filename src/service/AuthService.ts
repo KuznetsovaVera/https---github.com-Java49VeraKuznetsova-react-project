@@ -9,25 +9,16 @@ export class AuthService {
         //TODO
         //throws exception in the case mismatchig a given loginData
         //with array of users (field users)
-        let flLogin: boolean = false
-        const message: string = 'Wrong login or password, try again'
-        const logCur = this.users.find (el => 
-          /*
-            { if( loginData.username === el.username )
-                  loginData.password === el.password;
-        }
-            */
-        loginData.username === el.username
-        )
-        if (logCur) {
-            flLogin = logCur.password === loginData.password ?
-            true : false;
-        }
-
-        if (!flLogin) {
-            throw message;
-        }
-
+      
+        const message: string = 'error'
+        
+            if( this.users.findIndex((cur) => {
+                return cur.username === loginData.username &&
+                       cur.password === loginData.password
+            }) < 0) {
+                throw message;
+            }
+         
     }
 
 }

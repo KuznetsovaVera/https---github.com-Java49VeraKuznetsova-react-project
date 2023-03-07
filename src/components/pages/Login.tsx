@@ -13,18 +13,10 @@ export const Login: React.FC = ()=>{
     const dispatch = useDispatch();
     const authService = new AuthService();
 const mes = useRef<string>('');
-//const mesType: string = 'Wrong login - password, try again'
+const mesType: string = 'Wrong login - password, try again'
 const [flAlert, setflAlert] = useState<boolean>(false);
-//const loginData = useRef()
-/*
-function checkLogin (){
-    try{ authService.login(loginData.current)
-        dispatch(authActions.login(loginData.current.username))
-     } catch (m) {
-       mes.current = mesType;
-     }
-}
-*/
+
+
    return <Box>
        <LoginForm submitFn={function (loginData:LoginData): boolean{
       
@@ -32,7 +24,7 @@ function checkLogin (){
          dispatch(authActions.login(loginData.username))
          setflAlert(false)
       } catch (m) {
-        mes.current = String(m);
+        mes.current = mesType;
         setflAlert(true)
       } 
        return true;
@@ -40,8 +32,3 @@ function checkLogin (){
 
         </Box>
 }
-/*
-<Confirmation confirmFn={confirmFn.current} open={open}
-title={title.current} content={content.current}></Confirmation>
-}
-*/
