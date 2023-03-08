@@ -12,13 +12,11 @@ export class AuthService {
       
         const message: string = 'error'
         
-            if( this.users.findIndex((cur) => {
-                return cur.username === loginData.username &&
-                       cur.password === loginData.password
-            }) < 0) {
-                throw message;
-            }
+        const user = this.users.find(u => loginData.username === u.username);
+        if (!user || user.password !== loginData.password) {
+          throw 'Wrong credentials';
          
+        }
     }
 
 }
