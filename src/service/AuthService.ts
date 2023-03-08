@@ -22,4 +22,15 @@ export class AuthService {
     }
 
 }
+/* my code
+const message: string = 'error'
+        
+if( this.users.findIndex((cur) => {
+    return cur.username === loginData.username &&
+           cur.password === loginData.password
+}) < 0) {
+    throw message;
+}
+*/
+
 

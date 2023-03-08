@@ -8,7 +8,15 @@ import { LoginForm } from "../forms/LoginForm";
 import { LoginData } from "../../model/LoginData";
 import { current } from "@reduxjs/toolkit";
 
-
+export const Login: React.FC = ()=>{
+    const dispatch = useDispatch();
+    //TODO 
+    return <div>
+        {/* TODO */}
+        <LoginForm></LoginForm>
+        </div>
+}
+/* my code
 export const Login: React.FC = ()=>{
     const dispatch = useDispatch();
     const authService = new AuthService();
@@ -32,3 +40,4 @@ const [flAlert, setflAlert] = useState<boolean>(false);
 
         </Box>
 }
+*/

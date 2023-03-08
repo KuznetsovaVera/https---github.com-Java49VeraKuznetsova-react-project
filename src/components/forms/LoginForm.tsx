@@ -1,3 +1,7 @@
+export const LoginForm: React.FC = () => {
+    return <div></div>
+}
+/* MY code
 import { Alert, AlertTitle, Avatar, Box, Button, Container, createTheme, CssBaseline, Link, TextField, ThemeProvider, Typography } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { LoginData } from "../../model/LoginData";
@@ -25,12 +29,7 @@ export const LoginForm: React.FC<props> = ({submitFn, message, flAlert}) => {
       setMesAlert(true);
        console.log('logCurData',  logCur )
     
-        /*
-        console.log({
-          username: data.get('email'),
-          password: data.get('password'),
-        });
-       */
+      
       }
     function handlerAlert () {
         setMesAlert(false);
@@ -89,4 +88,4 @@ export const LoginForm: React.FC<props> = ({submitFn, message, flAlert}) => {
       );
     }
     
-   
+*/   
