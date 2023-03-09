@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux';
 import generationConfig from '../../config/generation-config.json';
 import { employeesActions } from "../../redux/employees-slice";
 import { createRandomEmployee } from "../../service/EmployeesService";
+import { Employee } from "../../model/Employee";
 export const Generation: React.FC = () => {
     const dispatch = useDispatch();
     const {defaultAmount, minAmount, maxAmount, alertTimeout} = generationConfig;
@@ -14,10 +15,12 @@ export const Generation: React.FC = () => {
     }
     function onSubmitFn(event: any) {
         event.preventDefault();
+        const employeesAr: Employee[] = [];
         for(let i = 0; i < amount; i++) {
-            dispatch(employeesActions.addEmployee(createRandomEmployee()));
+            employeesAr.push(createRandomEmployee())
         }
-        setAlertAccess(true);
+        dispatch(employeesActions.addBulkEmployees(employeesAr))
+       setAlertAccess(true);
         setTimeout(() => setAlertAccess(false),alertTimeout );
     }
     

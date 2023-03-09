@@ -16,14 +16,16 @@ import { SalaryStatistics } from './components/pages/SalaryStatistics';
 import { useEffect, useState } from 'react';
 import { NavigatorProps } from './model/NavigatorProps';
 import { RouteType } from './model/RouteType';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Login } from './components/pages/Login';
 import { Logout } from './components/pages/Logout';
 import { Generation } from './components/pages/Generation';
 import { NavigatorDispatch } from "./components/navigators/NavigatorDispatch";
+import { employeesActions } from "./redux/employees-slice";
 
 
 function App() {
+    const dispatch = useDispatch<any>();
     const [routes, setRoutes] = useState<RouteType[]>([]);
     const authUser:string = useSelector<any,string>(state=>state.auth.authenticated );
     useEffect(()=> {
@@ -37,7 +39,9 @@ function App() {
         }
         setRoutes(getRoutes());
     }, [authUser])
-
+useEffect (()=> {
+dispatch(employeesActions.getEmployees());
+},[])
   return <BrowserRouter>
       <Routes>
           <Route path='/' element={<NavigatorDispatch 

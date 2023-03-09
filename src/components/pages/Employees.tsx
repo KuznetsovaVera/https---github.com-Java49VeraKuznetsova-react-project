@@ -5,7 +5,7 @@ import { Employee } from '../../model/Employee';
 import { DataGrid, GridActionsCellItem, GridColumns } from '@mui/x-data-grid';
 import { Delete, Edit, PersonAdd } from '@mui/icons-material';
 import './table.css'
-import { employeesActions } from '../../redux/employees-slice';
+import { employeesActions } from "../../redux/employees-slice";
 import { EmployeeForm } from '../forms/EmployeeForm';
 import { Confirmation } from '../common/Confirmation';
 export const Employees: React.FC = () => {
