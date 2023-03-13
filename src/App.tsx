@@ -1,9 +1,3 @@
-import { Grid, Paper } from "@mui/material";
-//import './App.css'
-
-
-
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navigator } from './components/navigators/Navigator';
 import './App.css'
@@ -14,14 +8,13 @@ import { AddEmployee } from './components/pages/AddEmployee';
 import { AgeStatistics } from './components/pages/AgeStatistics';
 import { SalaryStatistics } from './components/pages/SalaryStatistics';
 import { useEffect, useState } from 'react';
-import { NavigatorProps } from './model/NavigatorProps';
 import { RouteType } from './model/RouteType';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { employeesActions } from './redux/employees-slice';
 import { Login } from './components/pages/Login';
 import { Logout } from './components/pages/Logout';
 import { Generation } from './components/pages/Generation';
-import { NavigatorDispatch } from "./components/navigators/NavigatorDispatch";
-import { employeesActions } from "./redux/employees-slice";
+import { NavigatorDispatch } from './components/navigators/NavigatorDispatch';
 
 
 function App() {
@@ -38,10 +31,13 @@ function App() {
             (authUser && r.flAuth && !r.flAdmin))
         }
         setRoutes(getRoutes());
-    }, [authUser])
-useEffect (()=> {
-dispatch(employeesActions.getEmployees());
-},[])
+    }, [authUser]);
+    useEffect(() => {
+        if(authUser) {
+              dispatch(employeesActions.getEmployees());
+        }
+      
+    },[authUser])
   return <BrowserRouter>
       <Routes>
           <Route path='/' element={<NavigatorDispatch 
@@ -60,9 +56,8 @@ dispatch(employeesActions.getEmployees());
   </BrowserRouter>
 
 }
-
-
 export default App;
+
 
 /*
 function App() {
