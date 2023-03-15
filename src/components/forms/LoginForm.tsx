@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+//import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
@@ -11,8 +11,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginData } from '../../model/LoginData';
-import { Alert } from '@mui/material';
+import { Alert, Button, Chip } from '@mui/material';
 import { CodeType } from '../../model/CodeType';
+import { Google } from '@mui/icons-material';
+
 
 function Copyright(props: any) {
   return (
@@ -37,9 +39,14 @@ export const LoginForm: React.FC<Props> = ({submitFn, code}) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const loginData: LoginData = {username: data.get("username") as string,
-  password: data.get("password") as string}
+    password: data.get("password") as string}
  submitFn(loginData);
   };
+  
+  function submitGoogle()   {
+    const loginData: LoginData = {username: 'GOOGLE', password:''}
+    submitFn(loginData)
+  }
   
   return (
     <ThemeProvider theme={theme}>
@@ -89,8 +96,18 @@ export const LoginForm: React.FC<Props> = ({submitFn, code}) => {
             >
               Sign In
             </Button>
-            <Grid container>
+           
+                        <Button  
+            fullWidth
+              
+              sx={{ mt: 3, mb: 2 }}
+              endIcon={<Google />}
+                         
+              onClick={submitGoogle}>Or use Google:
+              </Button>
              
+             
+            <Grid container>
               <Grid item>
               {code == 'Credentials Error' && <Alert severity='error' >{code}, enter another credentials</Alert>}
               </Grid>
@@ -108,7 +125,7 @@ export const LoginForm: React.FC<Props> = ({submitFn, code}) => {
 
 
 
-
+// startIcon={<img src="Google_icons.png"/>}
 
 /* MY code
 import { Alert, AlertTitle, Avatar, Box, Button, Container, createTheme, CssBaseline, Link, TextField, ThemeProvider, Typography } from "@mui/material";

@@ -5,7 +5,12 @@ import generationConfig from '../../config/generation-config.json';
 import { employeesActions } from "../../redux/employees-slice";
 import { createRandomEmployee } from "../../service/EmployeesService";
 import { Employee } from "../../model/Employee";
-export const Generation: React.FC = () => {
+import { CodeType } from "../../model/CodeType";
+import { codeActions } from "../../redux/codeSlice";
+type Props ={
+    code: CodeType
+}
+export const Generation: React.FC<Props> = ({code}) => {
     const dispatch = useDispatch();
     const {defaultAmount, minAmount, maxAmount, alertTimeout} = generationConfig;
     const [amount, setAmount] = React.useState<number>(defaultAmount);
@@ -19,10 +24,12 @@ export const Generation: React.FC = () => {
         for(let i = 0; i < amount; i++) {
             employeesAr.push(createRandomEmployee())
         }
-        dispatch(employeesActions.addBulkEmployees(employeesAr))
+       
+       dispatch(employeesActions.addBulkEmployees(employeesAr))
        setAlertAccess(true);
         setTimeout(() => setAlertAccess(false),alertTimeout );
-    }
+    
+}
     
 
 
@@ -43,7 +50,11 @@ export const Generation: React.FC = () => {
               <Button type="submit">Generate</Button>
               </Grid>
         </form>
-       
+         
+        <Grid item>
+              {code !== 'OK' && <Alert severity='error' 
+              onClose={()=>{dispatch(codeActions.setCode("OK"))}}>{code}, enter another credentials</Alert>}
+              </Grid>
         {flAlertSuccess && <Alert severity="success">Generated {amount} random employee objects</Alert>}
         
     </Box>

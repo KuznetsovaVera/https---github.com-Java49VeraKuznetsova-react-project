@@ -1,5 +1,5 @@
 import React, { ReactNode, useRef, useState } from 'react';
-import { Box, IconButton, List, ListItem, Typography } from '@mui/material';
+import { Alert, Box, Grid, IconButton, List, ListItem, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { Employee } from '../../model/Employee';
 import { DataGrid, GridActionsCellItem, GridColumns } from '@mui/x-data-grid';
@@ -8,10 +8,18 @@ import './table.css'
 import { employeesActions } from "../../redux/employees-slice";
 import { EmployeeForm } from '../forms/EmployeeForm';
 import { Confirmation } from '../common/Confirmation';
-export const Employees: React.FC = () => {
+import { type } from 'os';
+import { CodeType } from '../../model/CodeType';
+import { codeActions } from '../../redux/codeSlice';
+type Props ={
+    code: CodeType
+}
+export const Employees: React.FC<Props> = ({code}) => {
     const dispatch = useDispatch();
     const authUser = useSelector<any, string>(state => state.auth.authenticated);
     const editId = useRef<number>(0);
+
+    console.log("code", code);
     const columns = React.useRef<GridColumns>([
         {
             field: 'name', headerClassName: 'header', headerName: 'Employee Name',
@@ -55,6 +63,7 @@ export const Employees: React.FC = () => {
     const employees = useSelector<any, Employee[]>(state => state.company.employees);
     const idRemoved = useRef<number>(0);
     const employeeToUpdate = useRef<Employee>();
+
     function removeEmployee(id: number) {
         title.current = "Remove Employee object?";
         const employee = employees.find(empl => empl.id == id);
@@ -102,7 +111,14 @@ export const Employees: React.FC = () => {
     }
     return <Box sx={{ height: "80vh", width: "80vw" }}>
         {getComponent()}
+      
         <Confirmation confirmFn={confirmFn.current} open={open}
          title={title.current} content={content.current}></Confirmation>
+         
+         <Grid item>
+              {code !== 'OK' && <Alert severity='error' 
+              onClose={()=>{dispatch(codeActions.setCode("OK"))}}>{code}, enter another credentials</Alert>}
+              </Grid>
+
     </Box>
 }

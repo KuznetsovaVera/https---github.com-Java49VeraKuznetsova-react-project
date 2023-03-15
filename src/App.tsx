@@ -15,12 +15,16 @@ import { Login } from './components/pages/Login';
 import { Logout } from './components/pages/Logout';
 import { Generation } from './components/pages/Generation';
 import { NavigatorDispatch } from './components/navigators/NavigatorDispatch';
+import { CodeType } from './model/CodeType';
 
 
 function App() {
     const dispatch = useDispatch<any>();
     const [routes, setRoutes] = useState<RouteType[]>([]);
     const authUser:string = useSelector<any,string>(state=>state.auth.authenticated );
+    const code: CodeType = useSelector<any,CodeType>(state=>state.errorCode.code)
+
+   
     useEffect(()=> {
         function getRoutes(): RouteType[] {
             const logoutRoute: RouteType |undefined = layoutConfig.routes
@@ -42,13 +46,13 @@ function App() {
       <Routes>
           <Route path='/' element={<NavigatorDispatch 
            routes={routes}  />}>
-              <Route index element={<Employees/>}/>
+              <Route index element={<Employees code={code}/>}/>
               <Route path='add' element={<AddEmployee/>}/>
               <Route path='statistics/age' element={<AgeStatistics/>}/>
               <Route path='statistics/salary' element={<SalaryStatistics/>}/>
               <Route path='login' element={<Login/>}/>
               <Route path='logout' element={<Logout/>}/>
-              <Route path='generation' element={<Generation/>}/>
+              <Route path='generation' element={<Generation code={code}/>}/>
               
           </Route>
               
