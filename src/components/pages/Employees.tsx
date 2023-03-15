@@ -117,7 +117,7 @@ export const Employees: React.FC<Props> = ({code}) => {
          
          <Grid item>
               {code !== 'OK' && <Alert severity='error' 
-              onClose={()=>{dispatch(codeActions.setCode("OK"))}}>{code}, enter another credentials</Alert>}
+              onClose={()=>{dispatch(codeActions.setCode("OK"))}}>{code}</Alert>}
               </Grid>
 
     </Box>

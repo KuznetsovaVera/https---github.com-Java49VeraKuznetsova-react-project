@@ -47,15 +47,16 @@ export const employeesActions: any = {
         return async (dispatch: any) => {
            try { 
            await company.updateEmployee(empl); 
-           dispatch(codeActions.setCode("OK")); 
-        } catch(e) {
+              try {
+            dispatch(codeActions.setCode("OK")); 
+            const employees = await company.getAllEmployees();
+              dispatch(actions.setEmployees(employees));
+                  }       catch(e) {
+                    dispatch (codeActions.setCode("Unknown Error"))
+                 }
+                } catch (e) {
+            
             dispatch (codeActions.setCode("Authorization error"))
-        } try {
-           const employees = await company.getAllEmployees();
-           dispatch(actions.setEmployees(employees));
-         //  dispatch(codeActions.setCode("OK"));  
-        } catch (e) {
-            dispatch (codeActions.setCode("Unknown Error"))
         }
     }
     },
@@ -63,19 +64,16 @@ export const employeesActions: any = {
         return async (dispatch: any) => {
             try {
            await company.removeEmployee(id); 
-           dispatch(codeActions.setCode("OK")); 
-           console.log ("remove1")
-        } catch(e) {
+           try {
+            dispatch(codeActions.setCode("OK")); 
+            const employees = await company.getAllEmployees();
+              dispatch(actions.setEmployees(employees));
+                  }       catch(e) {
+                    dispatch (codeActions.setCode("Unknown Error"))
+                 }
+                } catch (e) {
+            
             dispatch (codeActions.setCode("Authorization error"))
-            console.log ("remove2")
-        } try {
-           const employees = await company.getAllEmployees();
-           dispatch(actions.setEmployees(employees));
-          // dispatch(codeActions.setCode("OK"));  
-           console.log ("remove3")
-        } catch (e) {
-            dispatch (codeActions.setCode("Unknown Error"))
-            console.log ("remove4")
         }
     }
     },
